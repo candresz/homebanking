@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./styles/styles.css" />
+    <title>Client Manager</title>
+  </head>
+  <body>
+    <div id="app">
+      <header></header>
+      <main>
+        <div
+          class="d-flex flex-column justify-content-center align-items-center min-vh-100 container"
+        >
+          <h1>Client Manager</h1>
+          <form class="needs-validation" novalidate>
+            <div class="mb-3">
+              <label for="validationCustom01" class="form-label"
+                >First Name</label
+              >
+              <input
+                v-model="firstName"
+                type="text"
+                class="form-control"
+                id="validationCustom01"
+                placeholder="Enter first name"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="validationCustom02" class="form-label"
+                >Last Name</label
+              >
+              <input
+                v-model="lastName"
+                type="text"
+                class="form-control"
+                id="validationCustom02"
+                placeholder="Enter last name"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="validationCustom03" class="form-label">Email</label>
+              <input
+                v-model="email"
+                type="email"
+                class="form-control"
+                id="validationCustom03"
+                placeholder="Enter email"
+                required
+              />
+            </div>
+            <div class="d-flex justify-content-center align-items-center">
+              <button
+                @click="addUser()"
+                class="btn btn-add-client"
+                type="submit"
+              >
+                Add Client
+              </button>
+            </div>
+          </form>
+          <div class="container">
+            <div class="m-3">
+              <h2>Client List</h2>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="client of clientsInformation">
+                    <td>{{client.firstName}}</td>
+                    <td>{{client.lastName}}</td>
+                    <td>{{client.email}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div>
+            <h2>Client REST response</h2>
+            <pre>{{ clientsInformation }}</pre>
+          </div>
+        </div>
+      </main>
+      <footer></footer>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./JS/manager.js"></script>
+  </body>
+</html>
