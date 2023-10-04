@@ -7,15 +7,14 @@ createApp({
       lastName: "",
       email: "",
       clientsInformation: [],
-      userData: [],
     };
   },
   created() {
-    fetch("http://localhost:8080/clients")
-      .then((res) => res.json())
-      .then((data) => {
-        this.clientsInformation = data._embedded.clients;
-        console.log(data);
+    axios
+      .get("http://localhost:8080/rest/clients/")
+      .then((response) => {
+        this.clientsInformation = response.data._embedded.clients;
+        console.log(response.data);
       })
       .catch((error) => console.log(error));
   },
@@ -28,9 +27,13 @@ createApp({
       };
 
       axios
-        .post("http://localhost:8080/clients", userData)
-        .then(function (response) {})
-        .catch(function (error) {});
+        .post("http://localhost:8080/rest/clients", userData)
+        .then(function (response) {
+          // Maneja la respuesta después de agregar un usuario
+        })
+        .catch(function (error) {
+          // Maneja los errores si ocurren al agregar un usuario
+        });
     },
   },
 }).mount("#app");

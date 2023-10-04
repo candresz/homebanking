@@ -1,61 +1,146 @@
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
   margin: 0;
   padding: 0;
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .container {
-  max-width: 800px;
-  margin: 50px auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-h1,
-h2 {
-  font-size: 24px;
-  text-align: center;
-}
-
-.table {
-  width: 100%;
   margin-top: 20px;
-  border-collapse: collapse;
 }
 
-.table th,
-.table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
+.card {
+  min-height: 15rem;
+
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.table th {
+/* Styles for the menu */
+.navbar {
+  margin-bottom: 20px;
+}
+
+.navbar-brand {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.navbar-nav .nav-item {
+  margin-right: 20px;
+}
+
+.navbar-nav .nav-link {
+  color: #333;
+  transition: color 0.3s;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #007bff;
+}
+
+/* Styles for the client info section */
+.client-info {
   background-color: #007bff;
   color: #fff;
-}
-
-.table tbody tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.table tbody tr:hover {
-  background-color: #ddd;
-}
-
-.btn-add-client {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
-  cursor: pointer;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
   transition: background-color 0.3s;
 }
 
-.btn-add-client:hover {
+.client-info h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.client-info:hover {
   background-color: #0056b3;
+}
+
+/* Styles for the total balance section */
+.total-balance {
+  background-color: #28a745;
+  color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.total-balance h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.total-balance:hover {
+  background-color: #1d993d;
+}
+
+/* Styles for the accounts section */
+.accounts {
+  margin-top: 20px;
+}
+
+.accounts .card {
+  transition: transform 0.3s;
+}
+
+.accounts .card:hover {
+  transform: scale(1.05);
+}
+
+/* Styles for the main dashboard */
+.dashboard {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  margin-top: 20px;
+  display: flex;
+}
+
+/* Styles for the footer */
+.footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.gapContainer {
+  gap: 2rem;
+}
+.balance-card {
+  background: linear-gradient(135deg, #0074e4, #0056b3); /* Gradiente de azul */
+  color: #fff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  border: 1px solid #0056b3; /* Borde delgado */
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  transition: transform 0.3s;
+}
+
+/* Animación de escala en hover para las cartas de saldo */
+.balance-card:hover {
+  transform: scale(1.05);
+}
+
+/* Estilos de fuente personalizada para las cartas de saldo */
+.balance-card h3 {
+  font-family: "Roboto", sans-serif; /* Ejemplo de fuente personalizada */
+  font-size: 18px;
 }

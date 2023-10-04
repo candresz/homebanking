@@ -2,24 +2,23 @@ package com.mindhub.homebanking.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
-@Entity // Crea una tabla(Cliente) en la base en la base de datos con los datos de esta clase
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
 public class Client {
 
-    // Primary key
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    private Long id;
+    private long ID;
 
-    // Properties
     private String firstName, lastName, email;
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    private Set<Account> accounts = new HashSet<>();
 
-    // Constructor
     public Client() {
     }
 
@@ -29,7 +28,10 @@ public class Client {
         this.email = email;
     }
 
-    //Getter and Setter
+    public long getID() {
+        return ID;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -54,14 +56,19 @@ public class Client {
         this.email = email;
     }
 
-    public Long getId() {
-        return id;
+    public Set<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void addAccount(Account account) {
+        account.setClient(this);
+        this.accounts.add(account);
     }
 
     @Override
     public String toString() {
         return "Client{" +
-                "id=" + id +
+                "ID=" + ID +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
