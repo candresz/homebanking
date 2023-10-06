@@ -19,28 +19,32 @@ body {
   justify-content: center;
   align-items: center;
 }
-
-/* Styles for the menu */
 .navbar {
-  margin-bottom: 20px;
+  background-color: #007bff;
 }
 
 .navbar-brand {
   font-size: 24px;
   font-weight: bold;
-}
-
-.navbar-nav .nav-item {
-  margin-right: 20px;
+  color: #fff;
 }
 
 .navbar-nav .nav-link {
-  color: #333;
+  color: #fff;
   transition: color 0.3s;
 }
 
 .navbar-nav .nav-link:hover {
-  color: #007bff;
+  color: #0056b3;
+}
+
+.navbar-toggler-icon {
+  background-color: #fff;
+}
+
+/* Estilos para el botón de Logout */
+.nav-item .nav-link i {
+  margin-right: 5px;
 }
 
 /* Styles for the client info section */
@@ -67,7 +71,7 @@ body {
   background-color: #28a745;
   color: #fff;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 35px;
   text-align: center;
   transition: background-color 0.3s;
 }
@@ -111,6 +115,7 @@ body {
   padding: 20px 0;
   text-align: center;
 }
+
 .cardsContainer {
   display: flex;
   flex-wrap: wrap;
@@ -124,14 +129,20 @@ body {
   gap: 2rem;
 }
 .balance-card {
-  background: linear-gradient(135deg, #0074e4, #0056b3); /* Gradiente de azul */
+  background: linear-gradient(135deg, #0074e4, #0056b3);
   color: #fff;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
-  border: 1px solid #0056b3; /* Borde delgado */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid #0056b3;
   padding: 20px;
   text-align: center;
   border-radius: 10px;
   transition: transform 0.3s;
+}
+
+/* Añade un mayor contraste al texto en las tarjetas de saldo */
+.balance-card h2,
+.balance-card p {
+  color: #fff;
 }
 
 /* Animación de escala en hover para las cartas de saldo */
@@ -143,4 +154,60 @@ body {
 .balance-card h3 {
   font-family: "Roboto", sans-serif; /* Ejemplo de fuente personalizada */
   font-size: 18px;
+}
+.credit {
+  color: green;
+}
+
+.debit {
+  color: red;
+}
+.biSize {
+  font-size: 3rem;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #007bff;
+  color: #fff;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+.details-button {
+  background-color: #007bff; /* Cambia el color de fondo según tu preferencia */
+  color: #fff; /* Cambia el color del texto según tu preferencia */
+  border: none;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.details-button:hover {
+  background-color: #0056b3; /* Cambia el color de fondo al pasar el mouse */
+}
+.navFlex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

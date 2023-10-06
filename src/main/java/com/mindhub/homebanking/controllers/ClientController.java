@@ -10,21 +10,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@RestController
-@RequestMapping("/api/clients")
+@RestController // Controlador bajo los parametros de REST(HTTP)
+@RequestMapping("/api/clients") // Asocio las peticiones a esta ruta(base).
 public class ClientController {
-    @Autowired
+    @Autowired //Injeccion de dependencias, le pedimos a Spring Boot que introduzca ClientRepository en esta clase.
     private ClientRepository clientRepository;
 
     @GetMapping
-    public List<ClientDTO> getAllClients(){
-        List<Client> clients = clientRepository.findAll();
+    public List<ClientDTO> getAllClients(){ // Esto solo es un metodo!
+        List<Client> clients = clientRepository.findAll(); //Le pido al JPARepository el listado
         Stream<Client> clientStream = clients.stream();
         Stream<ClientDTO> clientDTOStream = clientStream.map(ClientDTO::new);
         return clientDTOStream.collect(Collectors.toList());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") //Servlets anotaciones + metodo
     public ClientDTO getClientById(@PathVariable Long id) {
         return clientRepository.findById(id)
                 .map(ClientDTO::new) // Convierte el cliente a un DTO

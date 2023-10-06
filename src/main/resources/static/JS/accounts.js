@@ -4,6 +4,7 @@ createApp({
   data() {
     return {
       client: [],
+      accounts: [],
     };
   },
   created() {
@@ -11,11 +12,19 @@ createApp({
       .get("http://localhost:8080/api/clients/1")
       .then((response) => {
         this.client = response.data;
-        console.log(this.client);
+        this.accounts = response.data.accounts;
       })
       .catch((error) => {
-        console.error(error);
+        error;
       });
   },
   methods: {},
+  computed: {
+    totalBalance() {
+      return this.accounts.reduce(
+        (total, account) => total + account.balance,
+        0
+      );
+    },
+  },
 }).mount("#app");
