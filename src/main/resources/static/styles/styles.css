@@ -85,17 +85,26 @@ body {
   background-color: #1d993d;
 }
 
-/* Styles for the accounts section */
-.accounts {
-  margin-top: 20px;
+/* Styles for the Accounts section */
+.accounts-section {
+  background-color: #f0f0f0;
+  padding: 20px;
 }
 
-.accounts .card {
+.accounts-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.account-card {
+  background: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 10px;
   transition: transform 0.3s;
-}
-
-.accounts .card:hover {
-  transform: scale(1.05);
+  margin: 10px;
 }
 
 /* Styles for the main dashboard */
@@ -152,7 +161,7 @@ body {
 
 /* Estilos de fuente personalizada para las cartas de saldo */
 .balance-card h3 {
-  font-family: "Roboto", sans-serif; /* Ejemplo de fuente personalizada */
+  font-family: "Roboto", sans-serif;
   font-size: 18px;
 }
 .credit {
@@ -190,8 +199,8 @@ tr:hover {
   background-color: #ddd;
 }
 .details-button {
-  background-color: #007bff; /* Cambia el color de fondo según tu preferencia */
-  color: #fff; /* Cambia el color del texto según tu preferencia */
+  background-color: #007bff;
+  color: #fff;
   border: none;
   padding: 8px 16px;
   text-align: center;
@@ -204,7 +213,7 @@ tr:hover {
 }
 
 .details-button:hover {
-  background-color: #0056b3; /* Cambia el color de fondo al pasar el mouse */
+  background-color: #0056b3;
 }
 .navFlex {
   display: flex;

@@ -87,10 +87,11 @@
                 <h2>Total Balance: ${{ totalBalance.toLocaleString()}}</h2>
               </div>
             </div>
+            <h2>Accounts</h2>
             <div
               class="d-flex flex-row justify-content-center align-items-center gapContainer"
             >
-              <div v-for="account of accounts">
+              <div v-for="account of client.accounts">
                 <!-- Información de la cuenta -->
 
                 <div class="card balance-card">
@@ -108,6 +109,25 @@
                 </div>
               </div>
             </div>
+            <h2>Loans information</h2>
+            <div
+              class="d-flex flex-row justify-content-center align-items-center gapContainer"
+            >
+              <div v-for="loan of client.loans">
+                <!-- Información de los préstamos -->
+                <div
+                  v-if="client.loans.length>=1"
+                  class="card balance-card loan-card"
+                >
+                  <h2>{{ loan.loanName }}</h2>
+                  <p>Amount: ${{loan.amount.toLocaleString()}}</p>
+                  <p># Payments: {{loan.payments}}</p>
+                </div>
+                <div v-else>
+                  <h2>${{client.name}} does not have loans</h2>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </main>
@@ -117,15 +137,11 @@
         </div>
       </footer>
     </div>
-
-    <!-- Incluye las bibliotecas y scripts necesarios -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="../JS/accounts.js"></script>
-
-    <!-- Configura Vue y carga los datos del cliente -->
   </body>
 </html>
