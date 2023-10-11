@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Transaction {
-    // Propiedades
+    //---- Propiedades
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")

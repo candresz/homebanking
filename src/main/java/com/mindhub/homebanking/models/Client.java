@@ -5,19 +5,27 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+
 
 @Entity
 public class Client {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    private long ID;
+    private Long ID;
+    private String firstName;
+    private String lastName;
+    private String email;
 
-    private String firstName, lastName, email;
+    // ---- One to many de Client to Account
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Account> accounts = new HashSet<>();
+
+    // ---- One to many de Client to ClientLoan
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    private Set<ClientLoan> clientLoans = new HashSet<>();
 
     public Client() {
     }
@@ -28,9 +36,13 @@ public class Client {
         this.email = email;
     }
 
-    public long getID() {
+    // Getters y setters
+
+
+    public Long getID() {
         return ID;
     }
+
 
     public String getFirstName() {
         return firstName;
@@ -56,6 +68,19 @@ public class Client {
         this.email = email;
     }
 
+    public void setAccounts(Set<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    public Set<ClientLoan> getClientLoans() {
+        return clientLoans;
+    }
+
+    public void setClientLoans(Set<ClientLoan> clientLoans) {
+        this.clientLoans = clientLoans;
+    }
+
+
     public Set<Account> getAccounts() {
         return accounts;
     }
@@ -63,6 +88,11 @@ public class Client {
     public void addAccount(Account account) {
         account.setClient(this);
         this.accounts.add(account);
+    }
+
+    public void addClientLoan(ClientLoan clientLoan) {
+        clientLoan.setClient(this);
+        this.clientLoans.add(clientLoan);
     }
 
     @Override
@@ -74,4 +104,6 @@ public class Client {
                 ", email='" + email + '\'' +
                 '}';
     }
+
+
 }

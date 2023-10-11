@@ -24,15 +24,15 @@ public class AccountController {
     @GetMapping
     public List<AccountDTO> getAllAccounts(){ // Esto solo es un metodo!
         List<Account> accounts = accountRepository.findAll(); //Le pido al JPARepository el listado
-        Stream<Account> accountStream = accounts.stream();
+        Stream<Account> accountStream = accounts.stream(); // Convertimos a stream para usar las funciones de orden superior
         Stream<AccountDTO> accountDTOStream = accountStream.map(AccountDTO::new);
         return accountDTOStream.collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public AccountDTO getAccountById(@PathVariable Long id) {
-        return accountRepository.findById(id)
-                .map(AccountDTO::new) // Convierte la cuenta a un DTO
+    public AccountDTO getAccountById(@PathVariable Long id) { //Toma el valor que recibe de la URL y se lo asigna a id
+        return accountRepository.findById(id) // Hago uso del metodo findById, gracias a la inyeccion de accountRepository
+                .map(AccountDTO::new) // Convierte a cuentaDTO xq recibe la original, si encuentra el id
                 .orElse(null); // Si no se encuentra, retorna null
     }
 }
