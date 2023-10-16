@@ -1,0 +1,313 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  margin-top: 20px;
+}
+
+.card {
+  min-height: 15rem;
+
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.navbar {
+  background-color: #007bff;
+}
+
+.navbar-brand {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.navbar-nav .nav-link {
+  color: #fff;
+  transition: color 0.3s;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #0056b3;
+}
+
+.navbar-toggler-icon {
+  background-color: #fff;
+}
+
+/* Estilos para el botón de Logout */
+.nav-item .nav-link i {
+  margin-right: 5px;
+}
+
+/* Styles for the client info section */
+.client-info {
+  background-color: #007bff;
+  color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.client-info h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.client-info:hover {
+  background-color: #0056b3;
+}
+
+/* Styles for the total balance section */
+.total-balance {
+  background-color: #28a745;
+  color: #fff;
+  padding: 20px;
+  border-radius: 35px;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.total-balance h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.total-balance:hover {
+  background-color: #1d993d;
+}
+
+/* Styles for the Accounts section */
+.accounts-section {
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+.accounts-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.account-card {
+  background: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 10px;
+  transition: transform 0.3s;
+  margin: 10px;
+}
+
+/* Styles for the main dashboard */
+.dashboard {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  margin-top: 20px;
+  display: flex;
+}
+
+/* Styles for the footer */
+.footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.gapContainer {
+  gap: 2rem;
+}
+.balance-card {
+  background: linear-gradient(135deg, #0074e4, #0056b3);
+  color: #fff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid #0056b3;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  transition: transform 0.3s;
+}
+
+/* Añade un mayor contraste al texto en las tarjetas de saldo */
+.balance-card h2,
+.balance-card p {
+  color: #fff;
+}
+
+/* Animación de escala en hover para las cartas de saldo */
+.balance-card:hover {
+  transform: scale(1.05);
+}
+
+/* Estilos de fuente personalizada para las cartas de saldo */
+.balance-card h3 {
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+}
+.credit {
+  color: green;
+}
+
+.debit {
+  color: red;
+}
+.biSize {
+  font-size: 3rem;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #007bff;
+  color: #fff;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+.details-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.details-button:hover {
+  background-color: #0056b3;
+}
+.navFlex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  z-index: 9999;
+}
+
+.loader {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid blue;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  z-index: 99999;
+}
+
+.credit-card {
+  width: 300px;
+  height: 180px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.card-logo {
+  text-align: right;
+}
+
+.card-logo img {
+  min-width: 4rem;
+  max-width: 4rem;
+  min-height: 4rem;
+  max-height: 4rem;
+}
+
+.chip img {
+  width: 50px;
+  height: 2.5rem;
+}
+
+.card-type img {
+  width: 60px;
+}
+
+.card-holder {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.expiration {
+  font-size: 14px;
+  text-align: center;
+}
+
+.credit-card,
+.debit-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+}
+
+.credit-card:hover,
+.debit-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.credit-card-gold {
+  background-color: #a6882e;
+}
+.credit-card-silver {
+  background-color: #cfd2d4;
+}
+.credit-card-titanium {
+  background-color: #80848c;
+}

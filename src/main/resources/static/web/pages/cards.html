@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cards</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+
+    <link rel="stylesheet" href="../styles/styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">M Brothers Bank</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item navFlex">
+              <a class="nav-link" href="./accounts.html">
+                <i class="bi bi-person-circle"></i>
+                Accounts
+              </a>
+            </li>
+
+            <li class="nav-item navFlex">
+              <a class="nav-link" href="#">
+                <i class="bi bi-credit-card"></i>Cards</a
+              >
+            </li>
+            <li class="nav-item navFlex">
+              <a class="nav-link" href="#">
+                <i class="bi bi-currency-dollar"></i>Loans</a
+              >
+            </li>
+            <li class="nav-item navFlex">
+              <a class="nav-link" href="#">
+                <i class="bi bi-arrow-left-right"></i>Transactions</a
+              >
+            </li>
+          </ul>
+        </div>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="bi bi-box-arrow-right"></i>
+              Logout
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <main class="min-vh-100">
+        <div class="container">
+          <!-- Información del cliente -->
+          <div class="client-info">
+            <h2>Welcome, {{ client.firstName + " " + client.lastName }}</h2>
+          </div>
+
+          <div
+            class="d-flex flex-column justify-content-center align-items-center dashboard mb-4 gapContainer"
+          >
+            <h1 class="text-center">
+              Banking Dashboard <i class="bi bi-house-lock-fill"></i>
+            </h1>
+            <div v-if="cards.length > 0">
+              <h2>Credit Cards</h2>
+              <div
+                class="d-flex flex-row justify-content-center align-items-center gapContainer"
+              >
+                <div v-for="card of creditCards">
+                  <div
+                    :class="{
+                    'credit-card-gold': card.cardColor == 'GOLD',
+                    'credit-card-silver': card.cardColor == 'SILVER',
+                    'credit-card-titanium': card.cardColor == 'TITANIUM',
+                    'credit-card': true // Siempre aplica esta clase
+                  }"
+                  >
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <div class="card-logo">
+                        <img
+                          src="../img/kisspng-logo-mastercard-vector-graphics-font-visa-mastercard-logo-png-photo-png-arts-5b63429907fe99.1131615315332317690328.png"
+                          alt="Emisor de la tarjeta"
+                        />
+                      </div>
+                      <!-- Chip de la tarjeta -->
+                      <div class="chip">
+                        <img
+                          src="https://i.ibb.co/G9pDnYJ/chip.png"
+                          alt="Chip de la tarjeta"
+                        />
+                      </div>
+                    </div>
+
+                    <!-- Tipo de tarjeta -->
+                    <div class="card-type"></div>
+                    <!-- Nombre del titular -->
+                    <div class="card-holder">
+                      <span>{{card.cardHolder}}</span>
+                    </div>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <div class="card-number">
+                        <span>{{card.number}}</span>
+                      </div>
+                      <!-- Fecha de caducidad -->
+                      <div class="expiration">
+                        <span>{{card.thruDate}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <h2>Debit Cards</h2>
+              <div
+                class="d-flex flex-row justify-content-center align-items-center gapContainer"
+              >
+                <div v-for="card of debitCards">
+                  <div
+                    :class="{
+                    'credit-card-gold': card.cardColor == 'GOLD',
+                    'credit-card-silver': card.cardColor == 'SILVER',
+                    'credit-card-titanium': card.cardColor == 'TITANIUM',
+                    'credit-card': true // Siempre aplica esta clase
+                  }"
+                  >
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <div class="card-logo">
+                        <img
+                          src="../img/kisspng-logo-mastercard-vector-graphics-font-visa-mastercard-logo-png-photo-png-arts-5b63429907fe99.1131615315332317690328.png"
+                          alt="Emisor de la tarjeta"
+                        />
+                      </div>
+                      <!-- Chip de la tarjeta -->
+                      <div class="chip">
+                        <img
+                          src="https://i.ibb.co/G9pDnYJ/chip.png"
+                          alt="Chip de la tarjeta"
+                        />
+                      </div>
+                    </div>
+
+                    <!-- Tipo de tarjeta -->
+                    <div class="card-type"></div>
+                    <!-- Nombre del titular -->
+                    <div class="card-holder">
+                      <span>{{card.cardHolder}}</span>
+                    </div>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <div class="card-number">
+                        <span>{{card.number}}</span>
+                      </div>
+                      <!-- Fecha de caducidad -->
+                      <div class="expiration">
+                        <span>{{card.thruDate}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div v-else>
+              <p>
+                {{ client.firstName + " " + client.lastName }} does not have
+                cards yet
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+      <div v-if="loading" class="loader-container">
+        <div class="loader"></div>
+      </div>
+      <footer>
+        <div class="footer">
+          <p>&copy; 2023 M Brothers Bank. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../js/cards.js"></script>
+  </body>
+</html>
