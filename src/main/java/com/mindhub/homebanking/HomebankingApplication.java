@@ -31,7 +31,8 @@ public class HomebankingApplication {
             AccountRepository accountRepository,
             TransactionRepository transactionRepository,
             LoanRepository loanRepository,
-            ClientLoanRepository clientLoanRepository) {
+            ClientLoanRepository clientLoanRepository,
+            CardRepository cardRepository) {
 
         return args -> {
             LocalDate today = LocalDate.now();
@@ -112,6 +113,20 @@ public class HomebankingApplication {
             joe.addClientLoan(carJoe);
             car.addClientLoan(carJoe);
             clientLoanRepository.save(carJoe);
+
+            LocalDate fiveYears = today.plusYears(5);
+            Card cardMelba = new Card(melba.fullName(), CardType.DEBIT, CardColor.GOLD, "3714-4963-5398-431", "523", fiveYears, today);
+            melba.addCard(cardMelba);
+            cardRepository.save(cardMelba);
+
+            Card cardMelbaTi = new Card(melba.fullName(), CardType.CREDIT, CardColor.TITANIUM, "4032-03354-0524-290", "632", fiveYears, today);
+            melba.addCard(cardMelbaTi);
+            cardRepository.save(cardMelbaTi);
+
+            Card cardJoe = new Card(joe.fullName(), CardType.CREDIT, CardColor.SILVER, "4032-03913-9022-893", "507", fiveYears, today);
+            joe.addCard(cardJoe);
+            cardRepository.save(cardJoe);
+
         };
     }
 }
