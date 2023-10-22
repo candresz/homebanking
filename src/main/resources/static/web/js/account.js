@@ -7,13 +7,21 @@ createApp({
       transactions: [],
     };
   },
+  methods: {
+    logOut() {
+      axios.post("/api/logout").then((response) => {
+        console.log("Signed out");
+        location.pathname = "/web/index.html"; // Redirige al usuario a la página de inicio.
+      });
+    },
+  },
   created() {
     const parameters = location.search;
     const parametersKeyValue = new URLSearchParams(parameters);
     const id = parametersKeyValue.get("id");
 
     axios
-      .get(`http://localhost:8080/api/accounts/${id}`)
+      .get(`/api/accounts/${id}`)
       .then((response) => {
         this.account = response.data;
         this.transactions = response.data.transactions;

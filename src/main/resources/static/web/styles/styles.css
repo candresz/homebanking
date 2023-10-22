@@ -40,6 +40,9 @@ body {
 
 .navbar-toggler-icon {
   background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Estilos para el botón de Logout */
@@ -97,14 +100,38 @@ body {
 }
 
 .account-card {
-  background: #fff;
-  color: #333;
+  background: #0e335d;
+  color: #edfaff;
   border: 1px solid #ddd;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   padding: 20px;
   border-radius: 10px;
   transition: transform 0.3s;
   margin: 10px;
+  text-align: left;
+}
+.loan-card {
+  background-color: #007bff;
+  color: #fff;
+  border: 1px solid #0056b3;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  transition: transform 0.3s;
+  margin: 10px;
+}
+.account-card h2 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #83e3ff;
+}
+
+/* Estilos en hover para las tarjetas de Accounts y Loans */
+.account-card:hover,
+.loan-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* Styles for the main dashboard */
@@ -113,8 +140,11 @@ body {
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   padding: 20px;
-  margin-top: 20px;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
 /* Styles for the footer */
@@ -199,7 +229,7 @@ tr:hover {
   background-color: #ddd;
 }
 .details-button {
-  background-color: #007bff;
+  background-color: #48d0ff;
   color: #fff;
   border: none;
   padding: 8px 16px;
@@ -210,10 +240,12 @@ tr:hover {
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 4px;
+  display: flex;
+  justify-content: center;
 }
 
 .details-button:hover {
-  background-color: #0056b3;
+  background-color: #83e3ff;
 }
 .navFlex {
   display: flex;
@@ -310,4 +342,153 @@ tr:hover {
 }
 .credit-card-titanium {
   background-color: #80848c;
+}
+
+.textSecondary {
+  color: #edfaff;
+}
+
+.loanStructure {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem;
+  border-bottom: #48d0ff solid 2px;
+  gap: 1rem;
+}
+.loansText,
+.accountsText {
+  font-size: 20px; /* Tamaño de fuente */
+  font-weight: bold; /* Peso de la fuente en negrita */
+  color: #333; /* Color del texto (negro en este caso) */
+  margin-top: 20px; /* Margen superior */
+  text-align: left; /* Alineación del texto al centro */
+}
+.textBankingDash {
+  font-size: 24px; /* Tamaño de fuente */
+  font-weight: bold; /* Peso de la fuente en negrita */
+  color: #007bff; /* Color del texto (azul en este caso) */
+  margin-top: 20px; /* Margen superior */
+  text-align: center; /* Alineación del texto al centro */
+}
+.mainForm {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #240046;
+  max-height: 28rem;
+  min-width: 15rem;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 7px 7px 10px 3px #24004628;
+}
+
+.formIndex {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px;
+}
+
+/*checkbox to switch from sign up to login*/
+#chk {
+  display: none;
+}
+
+/*Login*/
+.login {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.login label {
+  margin: 25% 0 5%;
+}
+
+label {
+  color: #fff;
+  font-size: 2rem;
+  justify-content: center;
+  display: flex;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.5s ease-in-out;
+}
+
+.input {
+  width: 100%;
+  height: 40px;
+  background: #e0dede;
+  padding: 10px;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+}
+
+/*Register*/
+.register {
+  background: #eee;
+  border-radius: 60% / 10%;
+  transform: translateY(5%);
+  transition: 0.8s ease-in-out;
+  min-height: 30rem;
+}
+
+.register label {
+  color: #573b8a;
+  transform: scale(0.6);
+}
+
+#chk:checked ~ .register {
+  transform: translateY(-60%);
+}
+
+#chk:checked ~ .register label {
+  transform: scale(1);
+  margin: 10% 0 5%;
+}
+
+#chk:checked ~ .login label {
+  transform: scale(0.6);
+  margin: 5% 0 5%;
+}
+/*Button*/
+.formIndex button {
+  width: 85%;
+  height: 40px;
+  margin: 12px auto 10%;
+  color: #fff;
+  background: #573b8a;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.2s ease-in;
+}
+
+.formIndex button:hover {
+  background-color: #6d44b8;
+}
+.imgCards {
+  max-width: 20rem;
+  max-height: 25rem;
+  display: flex;
+  justify-content: end;
+}
+
+.containerIndex {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 4rem;
+  margin: 2rem;
+}
+.containerMainBank {
+  gap: 3rem;
+}
+.bankImg > img {
+  max-width: 40rem;
+  max-height: rem;
 }

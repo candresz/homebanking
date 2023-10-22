@@ -61,86 +61,83 @@
         </div>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a @click="logOut" class="nav-link" href="#">
+            <a class="nav-link" href="#">
               <i class="bi bi-box-arrow-right"></i>
-              Logout
+              Login
             </a>
           </li>
         </ul>
       </nav>
       <main class="min-vh-100 bg-light">
         <div class="container">
-          <!-- Información del cliente -->
-          <div class="client-info text-white p-4 rounded mb-4">
-            <h2>Welcome, {{ client.firstName + " " + client.lastName }}!</h2>
-          </div>
+          <div class="containerIndex min-vh-100">
+            <div class="mainForm">
+              <input type="checkbox" id="chk" aria-hidden="true" />
 
-          <!-- Dashboard de banca -->
-          <div class="dashboard">
-            <h1 class="textBankingDash">
-              Banking Dashboard <i class="bi bi-file-lock"></i>
-            </h1>
-            <div>
-              <h2 class="animate__animated animate__bounce mt-5 accountsText">
-                Accounts
-              </h2>
-
-              <div class="d-flex flex-wrap justify-content-center gapContainer">
-                <div
-                  v-for="account of client.accounts"
-                  class="account-card p-4 rounded shadow"
-                >
-                  <!-- Información de la cuenta -->
-                  <p class="textSecondary">
-                    Account Number: #{{ account.number }}
-                  </p>
-                  <h2 class="font-weight-bold">
-                    Account Balance: ${{ account.balance.toLocaleString() }}
-                  </h2>
-                  <p>Creation Date: {{ account.creationDate }}</p>
-                  <a
-                    :href="'./account.html?id=' + account.id"
-                    class="btn btn-primary details-button"
-                    >Details</a
-                  >
-                </div>
+              <div class="login">
+                <form class="formIndex">
+                  <label for="chk" aria-hidden="true">Log in</label>
+                  <input
+                    class="input"
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    v-model="email"
+                  />
+                  <input
+                    class="input"
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    v-model="password"
+                  />
+                  <button @click="login" type="button">Log in</button>
+                </form>
               </div>
 
-              <!-- Sección de Loans -->
-
-              <h2 class="mt-5 animate__animated animate__bounce loansText">
-                Loans
-              </h2>
-              <div>
-                <div class="account-card p-4 rounded shadow">
-                  <div v-if="client.loans && client.loans.length >= 1">
-                    <div v-for="loan of client.loans">
-                      <!-- Información de los préstamos -->
-                      <div class="loanStructure">
-                        <h2>{{ loan.loanName }}</h2>
-
-                        <p class="font-weight-bold">
-                          Amount: ${{loan.amount.toLocaleString()}}
-                        </p>
-
-                        <p class="font-weight-bold">
-                          # Payments: {{loan.payments}}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div v-else class="text-center w-100 mt-4">
-                    <h3>No loans available</h3>
-                  </div>
-                </div>
+              <div class="register">
+                <form class="formIndex">
+                  <label for="chk" aria-hidden="true">Register</label>
+                  <input
+                    class="input"
+                    type="text"
+                    name="firstName"
+                    placeholder="First Name"
+                    required=""
+                    v-model="firstName"
+                  />
+                  <input
+                    class="input"
+                    type="text"
+                    name="lastName"
+                    placeholder="Last Name"
+                    required=""
+                    v-model="lastName"
+                  />
+                  <input
+                    class="input"
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    required=""
+                    v-model="email"
+                  />
+                  <input
+                    class="input"
+                    type="password"
+                    name="pswd"
+                    placeholder="Password"
+                    required=""
+                    v-model="password"
+                  />
+                  <button @click="register" type="button">Register</button>
+                </form>
               </div>
             </div>
           </div>
         </div>
       </main>
-      <div v-if="loading" class="loader-container">
-        <div class="loader"></div>
-      </div>
+
       <footer class="bg-dark text-white">
         <div class="footer text-center py-3">
           <p>&copy; 2023 M Brothers Bank. All rights reserved.</p>
@@ -152,6 +149,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="../js/accounts.js"></script>
+    <script src="../js/main.js"></script>
   </body>
 </html>

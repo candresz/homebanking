@@ -1,5 +1,6 @@
 package com.mindhub.homebanking;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +15,7 @@ import java.util.Set;
 
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static com.mindhub.homebanking.models.TransactionType.CREDIT;
 import static com.mindhub.homebanking.models.TransactionType.DEBIT;
@@ -21,10 +23,12 @@ import static com.mindhub.homebanking.models.TransactionType.DEBIT;
 @SpringBootApplication
 public class HomebankingApplication {
 
+
     public static void main(String[] args) {
         SpringApplication.run(HomebankingApplication.class, args);
     }
-
+    @Autowired
+    private PasswordEncoder passwordEnconder;
     @Bean
     public CommandLineRunner initData(
             ClientRepository clientRepository,
@@ -42,11 +46,18 @@ public class HomebankingApplication {
             String formattedDateTime = now.format(formatter);
             LocalDateTime formattedLocalDateTime = LocalDateTime.parse(formattedDateTime, formatter);
 
+
+
             // Crear clientes
-            Client melba = new Client("Melba", "Morel", "melbamorel@homebanking.com");
+            Client melba = new Client("Melba", "Morel", "melbamorel@homebanking.com", passwordEnconder.encode("melba"), false);
             clientRepository.save(melba);
-            Client joe = new Client("Joe", "Biden", "jbiden@homebanking.com");
+            Client joe = new Client("Joe", "Biden", "jbiden@homebanking.com", passwordEnconder.encode("joe"), false);
             clientRepository.save(joe);
+            Client admin = new Client("Admin", "Admin", "admin@homebanking.com", passwordEnconder.encode("admin"),true );
+            clientRepository.save(admin);
+            Client andres= new Client("Andres", "Zarate", "andres@homebanking.com", passwordEnconder.encode("andres"),false );
+            clientRepository.save(andres);
+
 
             // Crear cuentas
             Account accountOne = new Account("VIN001", LocalDate.now(), 5000.00);
@@ -115,15 +126,15 @@ public class HomebankingApplication {
             clientLoanRepository.save(carJoe);
 
             LocalDate fiveYears = today.plusYears(5);
-            Card cardMelba = new Card(melba.fullName(), CardType.DEBIT, CardColor.GOLD, "3714-4963-5398-431", "523", fiveYears, today);
+            Card cardMelba = new Card(melba.fullName(), CardType.DEBIT, CardColor.GOLD, "3714-4963-5398-4314", "523", fiveYears, today);
             melba.addCard(cardMelba);
             cardRepository.save(cardMelba);
 
-            Card cardMelbaTi = new Card(melba.fullName(), CardType.CREDIT, CardColor.TITANIUM, "4032-03354-0524-290", "632", fiveYears, today);
+            Card cardMelbaTi = new Card(melba.fullName(), CardType.CREDIT, CardColor.TITANIUM, "4032-0335-0524-2904", "632", fiveYears, today);
             melba.addCard(cardMelbaTi);
             cardRepository.save(cardMelbaTi);
 
-            Card cardJoe = new Card(joe.fullName(), CardType.CREDIT, CardColor.SILVER, "4032-03913-9022-893", "507", fiveYears, today);
+            Card cardJoe = new Card(joe.fullName(), CardType.CREDIT, CardColor.SILVER, "4032-0391-9022-8933", "507", fiveYears, today);
             joe.addCard(cardJoe);
             cardRepository.save(cardJoe);
 

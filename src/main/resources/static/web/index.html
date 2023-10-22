@@ -12,11 +12,15 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
     />
-    <link rel="stylesheet" href="../styles/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link rel="stylesheet" href="./styles/styles.css" />
   </head>
   <body>
     <div id="app">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand" href="#">M Brothers Bank</a>
         <button
           class="navbar-toggler"
@@ -27,7 +31,7 @@
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon"><i class="bi bi-list"></i></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
@@ -57,76 +61,52 @@
         </div>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a @click="logOut" class="nav-link" href="#">
+            <a class="nav-link" href="./pages/login.html">
               <i class="bi bi-box-arrow-right"></i>
-              Logout
+              Login
             </a>
           </li>
         </ul>
       </nav>
-      <main>
-        <div class="container min-vh-100">
+      <main class="min-vh-100 bg-light">
+        <div class="container">
           <div
-            class="d-flex flex-column justify-content-center align-items-center dashboard mb-4 gapContainer"
+            class="d-flex justify-content-center align-items-center containerMainBank min-vh-100"
           >
-            <h1 class="text-center">Selected Account #{{account.number}}.</h1>
-
-            <div
-              class="card balance-card d-flex justify-content-center align-items-end"
-            >
-              <i class="bi-credit-card biSize"></i>
-              <p>Account Number: #{{ account.number }}</p>
-              <h2>Account Balance: ${{ account.balance.toLocaleString()}}</h2>
-              <p>Creation Date: {{ account.creationDate }}</p>
+            <div class="bankImg">
+              <img
+                src="./img/pexels-croberin-photography-1422408.jpg"
+                alt="Bank Picture"
+              />
             </div>
-
-            <h2 class="mt-5">Transactions resume</h2>
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">Type</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="transaction of transactions">
-                  <td
-                    :class="{'debit': transaction.type == 'DEBIT', 'credit': transaction.type == 'CREDIT'}"
-                  >
-                    <span v-if="transaction.type == 'CREDIT'">
-                      <i class="bi bi-arrow-up-right-square-fill"></i>
-                    </span>
-                    <span v-else="transaction.type == 'DEBIT'">
-                      <i class="bi bi-arrow-down-left-square-fill"></i>
-                    </span>
-                    {{ transaction.type }}
-                  </td>
-                  <td>${{ transaction.amount.toLocaleString() }}</td>
-                  <td>{{ transaction.date }}</td>
-                  <td>{{ transaction.description }}</td>
-                </tr>
-              </tbody>
-            </table>
+            <div>
+              <p>
+                Welcome to M Brothers Bank, your trusted partner in the
+                financial world. With decades of experience, we're committed to
+                providing comprehensive financial solutions tailored to your
+                specific needs. Whether you're managing savings, investing, or
+                financing personal or business projects, we're here to help you
+                achieve your goals. Explore our range of high-quality banking
+                services, backed by cutting-edge technology and a passionate
+                team. Your financial success is our success. Welcome to a new
+                era of banking excellence with M Brothers Bank.
+              </p>
+            </div>
           </div>
         </div>
       </main>
-      <div v-if="loading" class="loader-container">
-        <div class="loader"></div>
-      </div>
-      <footer>
-        <div class="footer">
+
+      <footer class="bg-dark text-white">
+        <div class="footer text-center py-3">
           <p>&copy; 2023 M Brothers Bank. All rights reserved.</p>
         </div>
       </footer>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="../js/account.js"></script>
+    <script src="./js/main.js"></script>
   </body>
 </html>

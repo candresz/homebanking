@@ -9,7 +9,7 @@ createApp({
   },
   created() {
     axios
-      .get("http://localhost:8080/api/clients/1")
+      .get("/api/clients/currents")
       .then((response) => {
         this.client = response.data;
         this.accounts = response.data.accounts;
@@ -19,7 +19,14 @@ createApp({
         error;
       });
   },
-  methods: {},
+  methods: {
+    logOut() {
+      axios.post("/api/logout").then((response) => {
+        console.log("Signed out");
+        location.pathname = "/web/index.html"; // Redirige al usuario a la página de inicio.
+      });
+    },
+  },
   computed: {
     totalBalance() {
       return this.accounts.reduce(
