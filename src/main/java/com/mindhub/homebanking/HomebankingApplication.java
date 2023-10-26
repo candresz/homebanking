@@ -29,6 +29,7 @@ public class HomebankingApplication {
     }
     @Autowired
     private PasswordEncoder passwordEnconder;
+
     @Bean
     public CommandLineRunner initData(
             ClientRepository clientRepository,

@@ -20,6 +20,13 @@ createApp({
         })
         .catch((error) => {
           console.log(error);
+          if (this.email == "" || this.password == "") {
+            Swal.fire("Please complete all the required fields");
+          } else {
+            {
+              Swal.fire("User not registered");
+            }
+          }
         });
     },
     register() {
@@ -27,7 +34,6 @@ createApp({
         .post(
           "/api/clients",
           `firstName=${this.firstName}&lastName=${this.lastName}&email=${this.email}&password=${this.password}`
-          // { headers: { "content-type": "application/x-www-form-urlencoded" } }
         )
         .then((response) => {
           console.log("User registered");
@@ -42,7 +48,19 @@ createApp({
             });
         })
         .catch((error) => {
-          console.error("Error registering user:", error);
+          console.log("Error registering user:", error);
+          if (this.firstName == "") {
+            Swal.fire("Please complete your name");
+          }
+          if (this.lastName == "") {
+            Swal.fire("Please complete your last name");
+          }
+          if (this.email == "") {
+            Swal.fire("Please complete your email");
+          }
+          if (this.password == "") {
+            Swal.fire("Please complete your password");
+          }
         });
     },
   },

@@ -138,6 +138,7 @@ public class Client {
       return  getFirstName() + " " + getLastName();
     }
 
+
     @Override
     public String toString() {
         return "Client{" +

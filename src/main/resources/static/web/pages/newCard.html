@@ -75,67 +75,82 @@
       <main class="min-vh-100 bg-light">
         <div class="container">
           <div class="containerIndex min-vh-100">
-            <div class="mainForm">
+            <div class="mainForm min-vh-100">
               <input type="checkbox" id="chk" aria-hidden="true" />
 
               <div class="login">
-                <form class="formIndex">
-                  <label for="chk" aria-hidden="true">Log in</label>
+                <h2>Card Type</h2>
+                <div class="form-check">
                   <input
-                    class="input"
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    v-model="email"
+                    class="form-check-input"
+                    type="radio"
+                    name="cardType"
+                    id="exampleRadios1"
+                    value="CREDIT"
+                    v-model="cardType"
                   />
+                  <label class="form-check-label" for="exampleRadios1">
+                    Credit
+                  </label>
+                </div>
+                <div class="form-check">
                   <input
-                    class="input"
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    v-model="password"
+                    class="form-check-input"
+                    type="radio"
+                    name="cardType"
+                    id="exampleRadios2"
+                    value="DEBIT"
+                    v-model="cardType"
                   />
-                  <button @click="login" type="button">Log in</button>
-                </form>
+                  <label class="form-check-label" for="exampleRadios2">
+                    Debit
+                  </label>
+                </div>
               </div>
-
-              <div class="register">
-                <form class="formIndex">
-                  <label for="chk" aria-hidden="true">Register</label>
+              <div class="login">
+                <h2>Card Color</h2>
+                <div class="form-check">
                   <input
-                    class="input"
-                    type="text"
-                    name="firstName"
-                    placeholder="First Name"
-                    required=""
-                    v-model="firstName"
+                    class="form-check-input"
+                    type="radio"
+                    name="cardColor"
+                    id="exampleRadios1"
+                    value="SILVER"
+                    v-model="cardColor"
                   />
+                  <label class="form-check-label" for="exampleRadios1">
+                    Silver
+                  </label>
+                </div>
+                <div class="form-check">
                   <input
-                    class="input"
-                    type="text"
-                    name="lastName"
-                    placeholder="Last Name"
-                    required=""
-                    v-model="lastName"
+                    class="form-check-input"
+                    type="radio"
+                    name="cardColor"
+                    id="exampleRadios2"
+                    value="GOLD"
+                    v-model="cardColor"
                   />
+                  <label class="form-check-label" for="exampleRadios2">
+                    Gold
+                  </label>
+                </div>
+                <div class="form-check">
                   <input
-                    class="input"
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    required=""
-                    v-model="email"
+                    class="form-check-input"
+                    type="radio"
+                    name="cardColor"
+                    id="exampleRadios2"
+                    value="TITANIUM"
+                    v-model="cardColor"
                   />
-                  <input
-                    class="input"
-                    type="password"
-                    name="pswd"
-                    placeholder="Password"
-                    required=""
-                    v-model="password"
-                  />
-                  <button @click="register" type="button">Register</button>
-                </form>
+                  <label class="form-check-label" for="exampleRadios2">
+                    Titanium
+                  </label>
+                </div>
+              </div>
+              <div>
+                <button @click="newCard()" type="button">Create Card</button>
               </div>
             </div>
           </div>
@@ -154,6 +169,6 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-    <script src="../js/main.js"></script>
+    <script src="../js/newCard.js"></script>
   </body>
 </html>

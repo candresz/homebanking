@@ -21,7 +21,7 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
     ClientRepository clientRepository;
 
 
-    @Override
+    @Override // Sobre escribimos el metodo init que proviene de GlobalAuthenticationConfigurerAdapter
     public void init(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.userDetailsService(inputName -> {
