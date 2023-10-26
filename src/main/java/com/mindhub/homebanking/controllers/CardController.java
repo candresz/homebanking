@@ -64,7 +64,7 @@ public class CardController {
         return cardCvvNumber.toString();
     }
 
-    @PostMapping("/currents/cards")
+    @PostMapping("/current/cards")
     public ResponseEntity<Object> newCard(@RequestParam String cardType, @RequestParam String cardColor,
                                           Authentication authentication) {
 

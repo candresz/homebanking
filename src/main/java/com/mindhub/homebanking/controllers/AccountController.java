@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -45,6 +46,15 @@ public class AccountController {
                 .map(AccountDTO::new) // Convierte a cuentaDTO xq recibe la original, si encuentra el id
                 .orElse(null); // Si no se encuentra, retorna null
     }
+    @GetMapping("/clients/current/accounts")
+    public Set<AccountDTO> getAccountClientCurrent(Authentication authentication) {
+        return clientRepository.findByEmail(authentication.getName())
+                .getAccounts()
+                .stream()
+                .map(account -> new AccountDTO(account))
+                .collect(Collectors.toSet());
+    }
+
 
     @PostMapping("/clients/current/accounts")
     public ResponseEntity<Object> newAccount(Authentication authentication) {

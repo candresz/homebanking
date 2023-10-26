@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Banking Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles/transfersStyles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="../index.html">M Brothers Bank</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"><i class="bi bi-list"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item navFlex">
+              <a class="nav-link" href="./accounts.html">
+                <i class="bi bi-person-circle"></i>
+                Accounts
+              </a>
+            </li>
+
+            <li class="nav-item navFlex">
+              <a class="nav-link" href="./cards.html">
+                <i class="bi bi-credit-card"></i>Cards</a
+              >
+            </li>
+            <li class="nav-item navFlex">
+              <a class="nav-link" href="#">
+                <i class="bi bi-currency-dollar"></i>Loans</a
+              >
+            </li>
+            <li class="nav-item navFlex">
+              <a class="nav-link" href="#">
+                <i class="bi bi-arrow-left-right"></i>Transactions</a
+              >
+            </li>
+          </ul>
+        </div>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="bi bi-box-arrow-right"></i>
+              Login
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <main class="min-vh-100 bg-light">
+        <div class="container">
+          <div class="containerIndex min-vh-100">
+            <div class="rightside mt-3">
+              <form class="d-flex flex-column">
+                <div class="d-flex flex-column justify-content-center w-100">
+                  <h2>Make a transaction</h2>
+                  <div class="form d-flex gap-3 justify-content-center">
+                    <div class="d-flex gap-3">
+                      <label class="form-check-label" for="debit">
+                        My accounts
+                      </label>
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="card"
+                        value="DEBIT"
+                        v-model="typeCard"
+                        id="debit"
+                      />
+                    </div>
+                    <div class="d-flex gap-3">
+                      <label class="form-check-label" for="credit">
+                        Others
+                      </label>
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="card"
+                        value="CREDIT"
+                        v-model="typeCard"
+                        id="credit"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <p class="mt-4">From account</p>
+                <select
+                  class="inputbox"
+                  name="card_type"
+                  id="card_type"
+                  required
+                  name="fromAccount"
+                >
+                  <option class="center">-Origin account-</option>
+                  <option value="Visa">Visa</option>
+                  <option value="RuPay">RuPay</option>
+                  <option value="MasterCard">MasterCard</option>
+                </select>
+                <p>To account</p>
+                <input type="text" class="inputbox" name="toAccount" required />
+                <p>Amount</p>
+                <input
+                  type="number"
+                  class="inputbox"
+                  name="amount"
+                  id="card_number"
+                  required
+                />
+                <div class="expcvv">
+                  <p class="expcvv_text2">Description</p>
+                  <input
+                    type="text"
+                    class="inputbox"
+                    name="description"
+                    id="cvv"
+                    required
+                  />
+                </div>
+                <p></p>
+                <button type="submit" class="button">Transfer</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="bg-dark text-white">
+        <div class="footer text-center py-3">
+          <p>&copy; 2023 M Brothers Bank. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>

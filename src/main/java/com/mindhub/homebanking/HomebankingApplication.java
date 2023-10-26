@@ -90,7 +90,7 @@ public class HomebankingApplication {
             accountTwo.addTransaction(transactionAccountTwoThree);
             transactionRepository.save(transactionAccountTwoThree);
 
-            Transaction transactionSecondUser = new Transaction(CREDIT, 145100.00, formattedLocalDateTime, "First transaction");
+            Transaction transactionSecondUser = new Transaction(CREDIT, 20000.00, formattedLocalDateTime, "First transaction");
             accountSecondUserOne.addTransaction(transactionSecondUser);
             transactionRepository.save(transactionSecondUser);
 

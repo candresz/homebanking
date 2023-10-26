@@ -84,7 +84,7 @@ public class ClientController {
         return new ResponseEntity<>("Client created successfully", HttpStatus.CREATED);
     }
 
-    @RequestMapping("/currents")
+    @RequestMapping("/current")
     public ClientDTO getClientCurrent(Authentication authentication) {
         return new ClientDTO(clientRepository.findByEmail(authentication.getName()));
     }

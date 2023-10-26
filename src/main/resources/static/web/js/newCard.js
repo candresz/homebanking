@@ -12,7 +12,7 @@ createApp({
   methods: {
     getClient() {
       axios
-        .get("/api/clients/currents")
+        .get("/api/clients/current")
         .then((response) => {
           this.client = response.data;
           this.accounts = response.data.accounts;
@@ -25,7 +25,7 @@ createApp({
     newCard() {
       axios
         .post(
-          "/api/clients/currents/cards",
+          "/api/clients/current/cards",
           `cardColor=${this.cardColor}&cardType=${this.cardType}`
         )
         .then((response) => {
