@@ -75,82 +75,42 @@
       <main class="min-vh-100 bg-light">
         <div class="container">
           <div class="containerIndex min-vh-100">
-            <div class="mainForm min-vh-100">
-              <input type="checkbox" id="chk" aria-hidden="true" />
-
-              <div class="login">
-                <h2>Card Type</h2>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="cardType"
-                    id="exampleRadios1"
-                    value="CREDIT"
-                    v-model="cardType"
-                  />
-                  <label class="form-check-label" for="exampleRadios1">
-                    Credit
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="cardType"
-                    id="exampleRadios2"
-                    value="DEBIT"
-                    v-model="cardType"
-                  />
-                  <label class="form-check-label" for="exampleRadios2">
-                    Debit
-                  </label>
-                </div>
-              </div>
-              <div class="login">
-                <h2>Card Color</h2>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="cardColor"
-                    id="exampleRadios1"
-                    value="SILVER"
-                    v-model="cardColor"
-                  />
-                  <label class="form-check-label" for="exampleRadios1">
-                    Silver
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="cardColor"
-                    id="exampleRadios2"
-                    value="GOLD"
-                    v-model="cardColor"
-                  />
-                  <label class="form-check-label" for="exampleRadios2">
-                    Gold
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="cardColor"
-                    id="exampleRadios2"
-                    value="TITANIUM"
-                    v-model="cardColor"
-                  />
-                  <label class="form-check-label" for="exampleRadios2">
-                    Titanium
-                  </label>
-                </div>
-              </div>
-              <div>
-                <button @click="newCard()" type="button">Create Card</button>
+            <div>
+              <img
+                class="registerImg"
+                src="../img/templatecc.png"
+                alt="Women using phone"
+              />
+            </div>
+            <div class="custom-form-container">
+              <div class="custom-form-section">
+                <label for="cardType">Card Type</label>
+                <select
+                  name="cardType"
+                  class="custom-select-box"
+                  v-model="cardType"
+                  id="cardType"
+                >
+                  <option value="CREDIT">Credit</option>
+                  <option value="DEBIT">Debit</option>
+                </select>
+                <label for="cardColor">Card Color</label>
+                <select
+                  name="cardColor"
+                  class="custom-select-box"
+                  v-model="cardColor"
+                >
+                  <option value="GOLD">Gold</option>
+                  <option value="SILVER">Silver</option>
+                  <option value="TITANIUM">Titanium</option>
+                </select>
+                <button
+                  class="custom-submit-button"
+                  type="button"
+                  @click="newCard"
+                >
+                  Create Card
+                </button>
               </div>
             </div>
           </div>

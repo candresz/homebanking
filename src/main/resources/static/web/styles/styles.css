@@ -375,7 +375,7 @@ tr:hover {
   position: relative;
   display: flex;
   flex-direction: column;
-  background-color: #240046;
+  background-color: #0056b3;
   max-height: 28rem;
   min-width: 15rem;
   overflow: hidden;
@@ -436,7 +436,7 @@ label {
 }
 
 .register label {
-  color: #573b8a;
+  color: #0056b3;
   transform: scale(0.6);
 }
 
@@ -459,7 +459,7 @@ label {
   height: 40px;
   margin: 12px auto 10%;
   color: #fff;
-  background: #573b8a;
+  background: #007bff;
   font-size: 1rem;
   font-weight: bold;
   border: none;
@@ -469,7 +469,7 @@ label {
 }
 
 .formIndex button:hover {
-  background-color: #6d44b8;
+  background-color: #053c77;
 }
 .imgCards {
   max-width: 20rem;
@@ -491,4 +491,93 @@ label {
 .bankImg > img {
   max-width: 40rem;
   max-height: rem;
+}
+.registerImg {
+  display: inline-block; /* Para que el contenedor abarque solo el tamaño de la imagen */
+  border: 2px solid #007bff; /* Borde azul con un grosor de 2px */
+  border-radius: 10px; /* Bordes redondeados */
+  overflow: hidden; /* Oculta el desbordamiento de la imagen */
+}
+.registerImg:hover {
+  transform: scale(1.1); /* Escala la imagen al 110% del tamaño original */
+  transition: transform 0.3s ease; /* Agrega una transición suave */
+}
+/* Estilos para el botón */
+.btnAccount {
+  background-color: #007bff; /* Color de fondo azul (puedes personalizarlo) */
+  color: #fff; /* Color del texto blanco (puedes personalizarlo) */
+  border: none; /* Sin borde */
+  padding: 10px 20px; /* Espaciado interno para el botón */
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  font-size: 16px; /* Tamaño de fuente */
+  font-weight: bold; /* Negrita */
+  transition: background-color 0.3s; /* Transición suave en el cambio de color de fondo */
+}
+
+/* Estilos al pasar el mouse sobre el botón */
+.btnAccount:hover {
+  background-color: #0056b3; /* Cambia el color de fondo al pasar el mouse (puedes personalizarlo) */
+}
+
+/* Estilos al hacer clic en el botón */
+.btnAccount:active {
+  background-color: #003f80; /* Cambia el color de fondo cuando se hace clic (puedes personalizarlo) */
+}
+.btnAccountContainer {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.custom-form-container {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+}
+
+.custom-form-section {
+  display: flex;
+  flex-direction: column;
+}
+.custom-form-section > label {
+  font-size: 1rem;
+}
+
+.custom-input-field {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #333; /* Color de texto oscuro para mejor legibilidad */
+}
+
+.custom-select-box {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #333; /* Color de texto oscuro para mejor legibilidad */
+}
+
+.custom-submit-button {
+  background-color: #0056b3; /* Color de fondo más oscuro al hacer hover */
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s;
+}
+
+.custom-submit-button:hover {
+  background-color: #003f80; /* Cambio de color de fondo al hacer hover */
 }

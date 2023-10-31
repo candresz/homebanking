@@ -104,7 +104,14 @@
                     >Details</a
                   >
                 </div>
-                <button @click="createAccount" type="button">
+              </div>
+              <div class="btnAccountContainer">
+                <button
+                  v-if="client.accounts.length !=3"
+                  class="btnAccount"
+                  @click="createAccount"
+                  type="button"
+                >
                   Create new Account
                 </button>
               </div>

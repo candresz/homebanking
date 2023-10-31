@@ -39,7 +39,7 @@ public class TransactionController {
     @PostMapping("/clients/current/transaction")
     public ResponseEntity<Object> newTransaction(@RequestParam Double amount, @RequestParam String description, @RequestParam String fromAccount, @RequestParam String toAccount, Authentication authentication) {
 
-        Client client = clientRepository.findByEmail(authentication.getName());
+        Client client = clientRepository.findByEmail(authentication.getName()); // Cliente autenticado
 
         if (amount <= 0) {
             return new ResponseEntity<>("The amount must not be zero", HttpStatus.FORBIDDEN);

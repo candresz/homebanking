@@ -14,23 +14,25 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Configuration
-// Le indica a Spring que debe crear un objeto de este tipo cuando se esta iniciando la aplicacion, para que cuando se configure el módulo de spring utilice ese objeto ya creado.
-public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
+@Configuration // Clase hereda de clase e interfaz hereda de interfaz("mismo tipo").
+// Le indicamos a Spring que esta clase va definir configuraciones de mi aplicacion.
+public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter { //Extension de Spring Security que nos permite configurar la autenticacion
     @Autowired
     ClientRepository clientRepository;
 
-
     @Override // Sobre escribimos el metodo init que proviene de GlobalAuthenticationConfigurerAdapter
-    public void init(AuthenticationManagerBuilder auth) throws Exception {
+    public void init(AuthenticationManagerBuilder auth) throws Exception { //El metodo init Se ejecuta y nos permite configurar
+        // Los detalles de autenticacion del usuario
 
-        auth.userDetailsService(inputName -> {
+        auth.userDetailsService(inputName -> { // Se ejecuta cuando el cliente se loguea.
 
-            Client client = clientRepository.findByEmail(inputName);
+            Client client = clientRepository.findByEmail(inputName); // Buscamos el usuario por el email proporcionado
+            // De forma interna se verifica que el correo y la pwd coincidan con los datos proporcionados.
 
             if (client != null) {
                 if (client.getAdmin()) {
-                    return new User(client.getEmail(), client.getPassword(),
+                    return new User(client.getEmail(), client.getPassword(), // Crea un objeto que representa los detalles del usuario
+                            // Y gracias a los datos que contiene este objeto se crea un nuevo objeto de tipo Authentication
                             AuthorityUtils.createAuthorityList("ADMIN"));
                 } else {
                     return new User(client.getEmail(), client.getPassword(),
@@ -45,7 +47,7 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
 
     }
 
-    @Bean
+    @Bean // Sea de las primeras cosas que se ejecuten y para que entre en el contexto de Spring para poder inyectarlo.
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }

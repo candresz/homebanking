@@ -14,42 +14,72 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@EnableWebSecurity
 @Configuration
+@EnableWebSecurity // Habilita la seguridad y nos permite realizar configuraciones de seguridad en la aplicacion.
 class WebAuthorization {
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests() // Autoriza peticiones
-                .antMatchers(HttpMethod.POST, "/api/clients", "/api/clients/current/**", "/api/login").permitAll()
-                .antMatchers("/web/index.html", "/web/pages/login.html", "/web/register.html",
-                        "/web/styles/**", "/web/js/**", "/web/img/**", "api/clients/current").permitAll()
-                .antMatchers("/h2-console/**", "/rest/", "/web/pages/manager.html").hasAuthority("ADMIN")
+    @Bean // Creamos una instancia de tipo SecurityFilterChain(Spring se encarga de administrar la instancia)
+    //A traves del metodo creamos una instancia. "return http.build()"
+
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception { // Una clase de Spring Security me permite configurar seguridad en relacion
+        // a las solicitudes HTTP.
+        http.authorizeRequests() // Autoriza peticiones, permite definir reglas de autorización
+                // Rutas Públicas (Acceso sin autenticación) solicitud de registro y logueo.
+                .antMatchers(
+                        HttpMethod.POST,
+                        "/api/clients", // Registro de clientes // ROLES
+                        "/api/clients/current/**", // Registro de cuentas
+                        "/api/login" // Logueo
+                ).permitAll()
+                .antMatchers(
+                        "/web/index.html",
+                        "/web/pages/login.html",
+                        "/web/register.html",
+                        "/web/styles/**",
+                        "/web/js/**",
+                        "/web/img/**"
+                ).permitAll()
+
+                // Rutas de Administrador
+                .antMatchers(
+                        "/h2-console/**",
+                        "/rest/**",
+                        "/web/pages/manager.html"
+                ).hasAuthority("ADMIN")
+
+                // Rutas de Solo Lectura para Administradores(Obtener listado de clientes)
                 .antMatchers(HttpMethod.GET, "/api/clients").hasAuthority("ADMIN")
-                .antMatchers("/api/logout/").authenticated()
-                .antMatchers("/web/pages/**").authenticated()
-                .antMatchers("/api/clients/current/accounts", "/api/clients/current/accounts/transaction").authenticated()
-                .antMatchers("/web").denyAll();
+
+                // Rutas Autenticadas (Requieren autenticación)
+                .antMatchers(
+                        "/api/logout/",
+                        "/web/pages/**",
+                        "/api/clients/current/accounts",
+                        "/api/clients/current/accounts/transaction"
+                ).authenticated()
+
+                // Ruta Denegada si no coincide con las rutas previamente definidas (Sin acceso)
+                .antMatchers("/api", "/rest").denyAll(); // anyrequest deny all
 
 
-        http.formLogin()
+        http.formLogin() // Configura el inicio de sesion basado en formulario en mi pagina web
 
-                .usernameParameter("email")
+                .usernameParameter("email") // Usuario, en nuestro caso hacemos uso del email.
 
                 .passwordParameter("password")
 
-                .loginPage("/api/login");
+                .loginPage("/api/login"); // Establecemos la ruta para inicio de sesion.
 
 
-        http.logout().logoutUrl("/api/logout");
+        http.logout().logoutUrl("/api/logout"); // Ruta donde se envia solicitud para cerrar sesion
 
         // turn off checking for CSRF tokens
 
-        http.csrf().disable();
+        http.csrf().disable(); // Desactivamos el Token del formulario.  Cross-Site Request Forgery
 
 
         //disabling frameOptions so h2-console can be accessed
 
-        http.headers().frameOptions().disable();
+        http.headers().frameOptions().disable(); // Desabilito el marco, la posibilidad de trabajar con una web externo.
 
         // if user is not authenticated, just send an authentication failure response
 
@@ -65,11 +95,13 @@ class WebAuthorization {
 
         // if logout is successful, just send a success response
 
-        http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
-        return http.build();
+        http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler()); // Mandamos un codigo de estado 200, exitoso.
+
+        return http.build(); // Retorna la configuracion establecida por nosotros y se crea la instancia.
 
     }
 
+    // Este metodo se encarga de eliminar los atributos ligados al inicio de sesion, ya sea fallido o exitoso.
     private void clearAuthenticationAttributes(HttpServletRequest request) {
 
         HttpSession session = request.getSession(false);

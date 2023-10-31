@@ -19,7 +19,7 @@ public class Client {
     private String lastName;
     private String email;
     private String password;
-    private Boolean admin;
+    private Boolean admin;  // isAdmin
 
     // ---- One to many de Client to Account
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)

@@ -30,10 +30,14 @@ public class CardController {
 
     // Metodo para generar un número de tarjeta de crédito aleatorio
     private String generateRandomCardNumber() {
-        StringBuilder cardNumber;
+
+        // String holaMundo = "Hola";
+        //    holaMundo+= "Mundo";
+        StringBuilder cardNumber; // String Builder(Clase de Java) me permite modificar el contenido de mi cadena sin necesitar de instanciar.
+
 
         do {
-           cardNumber = new StringBuilder();
+           cardNumber = new StringBuilder(); // Se crea un objeto nuevo cada vez que se completa un numero de tarjeta.
             for (int i = 0; i < 16; i++) { // 16 iteraciones
                 int digit = (int) (Math.random() * 10); // Genera un número de 0 a 9 y lo guardamos en digit
                 cardNumber.append(digit); // El número generado lo guardamos con .append gracias a StringBuilder

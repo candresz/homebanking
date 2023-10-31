@@ -20,7 +20,7 @@
       href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../styles/transfersStyles.css" />
+    <link rel="stylesheet" href="../styles/styles.css" />
   </head>
   <body>
     <div id="app">
@@ -75,75 +75,70 @@
       <main class="min-vh-100 bg-light">
         <div class="container">
           <div class="containerIndex min-vh-100">
-            <div class="rightside mt-3">
-              <form class="d-flex flex-column">
-                <div class="d-flex flex-column justify-content-center w-100">
-                  <h2>Make a transaction</h2>
-                  <div class="form d-flex gap-3 justify-content-center">
-                    <div class="d-flex gap-3">
-                      <label class="form-check-label" for="debit">
-                        My accounts
-                      </label>
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="card"
-                        value="DEBIT"
-                        v-model="typeCard"
-                        id="debit"
-                      />
-                    </div>
-                    <div class="d-flex gap-3">
-                      <label class="form-check-label" for="credit">
-                        Others
-                      </label>
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="card"
-                        value="CREDIT"
-                        v-model="typeCard"
-                        id="credit"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <p class="mt-4">From account</p>
+            <div>
+              <img
+                class="registerImg"
+                src="../img/grafika_banking.png"
+                alt="Women using phone"
+              />
+            </div>
+            <div class="custom-form-container">
+              <div class="custom-form-section">
+                <label for="transactionType">Transaction Type</label>
                 <select
-                  class="inputbox"
-                  name="card_type"
-                  id="card_type"
-                  required
-                  name="fromAccount"
+                  name="transactionType"
+                  class="custom-select-box"
+                  id="transactionType"
+                  v-model="transactionType"
                 >
-                  <option class="center">-Origin account-</option>
-                  <option value="Visa">Visa</option>
-                  <option value="RuPay">RuPay</option>
-                  <option value="MasterCard">MasterCard</option>
+                  <option value="credit">Credit</option>
+                  <option value="debit">Debit</option>
                 </select>
-                <p>To account</p>
-                <input type="text" class="inputbox" name="toAccount" required />
-                <p>Amount</p>
+                <label for="fromAccount">From Account</label>
+                <select v-model="fromAccount" class="custom-select-box">
+                  <option value="">From Account</option>
+                  <option
+                    v-for="account in client.accounts"
+                    :value="account.number"
+                  >
+                    {{ account.number }}
+                  </option>
+                </select>
+
+                <label for="toAccount">To Account</label>
                 <input
-                  type="number"
-                  class="inputbox"
-                  name="amount"
-                  id="card_number"
-                  required
+                  class="input"
+                  type="text"
+                  name="toAccount"
+                  placeholder="To Account"
+                  v-model="toAccount"
                 />
-                <div class="expcvv">
-                  <p class="expcvv_text2">Description</p>
-                  <input
-                    type="text"
-                    class="inputbox"
-                    name="description"
-                    id="cvv"
-                    required
-                  />
-                </div>
-                <p></p>
-                <button type="submit" class="button">Transfer</button>
-              </form>
+                <label for="amount">Monto</label>
+                <input
+                  class="custom-input-field"
+                  type="number"
+                  id="amount"
+                  placeholder="Monto"
+                  min="1"
+                  name="amount"
+                  v-model="amount"
+                />
+                <input
+                  class="custom-input-field"
+                  type="text"
+                  placeholder="Description"
+                  name="description"
+                  v-model="description"
+                />
+
+                <button
+                  class="custom-submit-button"
+                  type="submit"
+                  @click="createTransfer"
+                >
+                  Enviar
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -161,6 +156,6 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-    <script src="../js/main.js"></script>
+    <script src="../js/transfers.js"></script>
   </body>
 </html>

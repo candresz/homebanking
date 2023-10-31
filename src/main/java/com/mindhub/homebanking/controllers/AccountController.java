@@ -27,7 +27,7 @@ public class AccountController {
     private AccountRepository accountRepository;
     @Autowired
     private ClientRepository clientRepository;
-
+                                 //  10        100                  // 0 - 1          90       +   10 = 10.25
     private int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
     }

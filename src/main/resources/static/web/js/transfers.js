@@ -3,8 +3,13 @@ const { createApp } = Vue;
 createApp({
   data() {
     return {
-      client: [],
+      toAccount: "",
+      fromAccount: "",
+      amount: "",
+      transactionType: "",
+      description: "",
       accounts: [],
+      client: [],
     };
   },
   created() {
@@ -29,31 +34,20 @@ createApp({
         location.pathname = "/web/index.html"; // Redirige al usuario a la página de inicio.
       });
     },
-    createAccount() {
+    createTransfer() {
       axios
-        .post("/api/clients/current/accounts")
+        .post(
+          `/api/clients/current/transaction?amount=${this.amount}&description=${this.description}&fromAccount=${this.fromAccount}&toAccount=${this.toAccount}`
+        )
+
         .then((response) => {
-          this.getClient(); // Una vez creada la cuenta, hacemos una solicitud get nuevamente para obtener los datos actualizados.
+          this.getClient(); // Una vez creada la transferencia, hacemos una solicitud get nuevamente para obtener los datos actualizados.
+          location.pathname = "/web/pages/accounts.html";
         })
         .catch((error) => {
           console.error("Error:", error);
-          if (error.response.status === 403) {
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "You already have the maximum amount of accounts (3)",
-              color: "#fff",
-            });
-          }
         });
     },
   },
-  computed: {
-    totalBalance() {
-      return this.accounts.reduce(
-        (total, account) => total + account.balance,
-        0
-      );
-    },
-  },
+  computed: {},
 }).mount("#app");

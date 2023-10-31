@@ -190,7 +190,9 @@
               </p>
             </div>
             <div>
-              <a href="./newCard.html">Create New Card</a>
+              <a v-if="client.cards.length !=6" href="./newCard.html"
+                ><button class="btnAccount">Create New Card</button></a
+              >
             </div>
           </div>
         </div>
