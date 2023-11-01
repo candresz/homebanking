@@ -7,16 +7,35 @@ createApp({
       lastName: "",
       email: "",
       password: "",
+      isLoggedIn: false,
+      client: [],
     };
   },
-  created() {},
+  created() {
+    this.getClient(); // Es util tener el metodo a la mano, para poder actualizar datos.
+    this.isLoggedIn = JSON.parse(localStorage.getItem("login")) || false;
+  },
   methods: {
+    getClient() {
+      axios
+        .get("/api/clients/current")
+        .then((response) => {
+          this.client = response.data;
+          this.accounts = response.data.accounts;
+          setTimeout(() => (this.loading = false), 800);
+        })
+        .catch((error) => {
+          error;
+        });
+    },
     login() {
       axios
         .post("/api/login", `email=${this.email}&password=${this.password}`)
         .then((response) => {
-          console.log("Signed in");
+          this.isLoggedIn = true;
+          localStorage.setItem("login", JSON.stringify(this.isLoggedIn));
           location.pathname = "/web/pages/accounts.html";
+          console.log("Signed in");
         })
         .catch((error) => {
           console.log(error);
@@ -62,6 +81,13 @@ createApp({
             Swal.fire("Please complete your password");
           }
         });
+    },
+    logOut() {
+      axios.post("/api/logout").then((response) => {
+        this.isLoggedIn = false;
+        localStorage.setItem("login", JSON.parse(this.isLoggedIn));
+        console.log("Signed out");
+      });
     },
   },
 }).mount("#app");

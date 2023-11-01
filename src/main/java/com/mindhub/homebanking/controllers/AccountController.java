@@ -57,7 +57,7 @@ public class AccountController {
 
 
     @PostMapping("/clients/current/accounts")
-    public ResponseEntity<Object> newAccount(Authentication authentication) {
+    public ResponseEntity<String> newAccount(Authentication authentication) {
 
         // encapsulo el cliente
         Client client = clientRepository.findByEmail(authentication.getName());

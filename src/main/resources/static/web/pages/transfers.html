@@ -57,7 +57,7 @@
               >
             </li>
             <li class="nav-item navFlex">
-              <a class="nav-link" href="#">
+              <a class="nav-link active-link" href="#">
                 <i class="bi bi-arrow-left-right"></i>Transactions</a
               >
             </li>
@@ -65,17 +65,19 @@
         </div>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="bi bi-box-arrow-right"></i>
-              Login
+            <a @click="logOut" class="nav-link" href="#">
+              <i class="bi bi-box-arrow-in-left"></i>
+              Logout
             </a>
           </li>
         </ul>
       </nav>
       <main class="min-vh-100 bg-light">
         <div class="container">
-          <div class="containerIndex min-vh-100">
-            <div>
+          <div
+            class="d-flex flex-column justify-content-center align-items-center flex-md-row containerIndex min-vh-100"
+          >
+            <div class="bankImg">
               <img
                 class="registerImg"
                 src="../img/grafika_banking.png"
@@ -91,11 +93,17 @@
                   id="transactionType"
                   v-model="transactionType"
                 >
-                  <option value="credit">Credit</option>
-                  <option value="debit">Debit</option>
+                  <option value="bAccounts">Between my accounts</option>
+                  <option value="oAccounts">Others accounts</option>
                 </select>
-                <label for="fromAccount">From Account</label>
-                <select v-model="fromAccount" class="custom-select-box">
+                <label v-if="transactionType == 'bAccounts'" for="fromAccount"
+                  >From Account</label
+                >
+                <select
+                  v-if="transactionType == 'bAccounts'"
+                  v-model="fromAccount"
+                  class="custom-select-box"
+                >
                   <option value="">From Account</option>
                   <option
                     v-for="account in client.accounts"
@@ -105,14 +113,51 @@
                   </option>
                 </select>
 
-                <label for="toAccount">To Account</label>
+                <label v-if="transactionType == 'bAccounts'" for="toAccount"
+                  >To Account</label
+                >
+                <select
+                  v-if="transactionType == 'bAccounts'"
+                  v-model="toAccount"
+                  class="custom-select-box"
+                >
+                  <option value="">To Account</option>
+                  <option
+                    v-for="account in client.accounts"
+                    :value="account.number"
+                    :disabled="account.number == fromAccount"
+                  >
+                    {{ account.number }}
+                  </option>
+                </select>
+                <label v-if="transactionType == 'oAccounts'" for="fromAccount"
+                  >From Account</label
+                >
+                <select
+                  v-if="transactionType == 'oAccounts'"
+                  v-model="fromAccount"
+                  class="custom-select-box"
+                >
+                  <option value="">From Account</option>
+                  <option
+                    v-for="account in client.accounts"
+                    :value="account.number"
+                  >
+                    {{ account.number }}
+                  </option>
+                </select>
+                <label v-if="transactionType == 'oAccounts'" for="toAccount"
+                  >To Account</label
+                >
                 <input
-                  class="input"
+                  v-if="transactionType == 'oAccounts'"
+                  class="custom-input-field"
                   type="text"
-                  name="toAccount"
                   placeholder="To Account"
+                  name="toAccount"
                   v-model="toAccount"
                 />
+
                 <label for="amount">Monto</label>
                 <input
                   class="custom-input-field"

@@ -61,9 +61,11 @@
         </div>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="./pages/login.html">
-              <i class="bi bi-box-arrow-right"></i>
-              Login
+            <a class="nav-link" v-if="!isLoggedIn" href="./pages/login.html">
+              <i class="bi bi-box-arrow-right"></i> Login
+            </a>
+            <a class="nav-link" v-else @click="logOut">
+              <i class="bi bi-box-arrow-right"></i> Log out
             </a>
           </li>
         </ul>
@@ -71,7 +73,7 @@
       <main class="min-vh-100 bg-light">
         <div class="container">
           <div
-            class="d-flex justify-content-center align-items-center containerMainBank min-vh-100"
+            class="d-flex flex-column justify-content-center flex-md-row align-items-center containerMainBank min-vh-100"
           >
             <div class="bankImg">
               <img

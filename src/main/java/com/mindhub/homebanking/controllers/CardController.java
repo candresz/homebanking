@@ -69,7 +69,7 @@ public class CardController {
     }
 
     @PostMapping("/current/cards")
-    public ResponseEntity<Object> newCard(@RequestParam String cardType, @RequestParam String cardColor,
+    public ResponseEntity<String> newCard(@RequestParam String cardType, @RequestParam String cardColor,
                                           Authentication authentication) {
 
         if (cardColor.isEmpty()) {

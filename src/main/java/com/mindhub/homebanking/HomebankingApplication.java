@@ -74,7 +74,7 @@ public class HomebankingApplication {
             accountRepository.save(accountSecondUserOne);
 
             // Crear transacciones
-            Transaction transactionOne = new Transaction(DEBIT, 1000.00, formattedLocalDateTime, "First transaction");
+            Transaction transactionOne = new Transaction(DEBIT, -1000.00, formattedLocalDateTime, "First transaction");
             accountOne.addTransaction(transactionOne);
             transactionRepository.save(transactionOne);
 
@@ -82,7 +82,7 @@ public class HomebankingApplication {
             accountOne.addTransaction(transactionTwo);
             transactionRepository.save(transactionTwo);
 
-            Transaction transactionAccountTwoOne = new Transaction(DEBIT, 14500.00, formattedLocalDateTime, "First transaction");
+            Transaction transactionAccountTwoOne = new Transaction(DEBIT, -14500.00, formattedLocalDateTime, "First transaction");
             accountTwo.addTransaction(transactionAccountTwoOne);
             transactionRepository.save(transactionAccountTwoOne);
 

@@ -5,6 +5,7 @@ createApp({
     return {
       account: [],
       transactions: [],
+      id: "",
     };
   },
   methods: {
@@ -18,13 +19,14 @@ createApp({
   created() {
     const parameters = location.search;
     const parametersKeyValue = new URLSearchParams(parameters);
-    const id = parametersKeyValue.get("id");
+    this.id = parametersKeyValue.get("id");
 
     axios
-      .get(`/api/accounts/${id}`)
-      .then((response) => {
-        this.account = response.data;
-        this.transactions = response.data.transactions;
+      .get(`/api/clients/current/accounts`)
+      .then(({ data }) => {
+        this.account = data.find((account) => account.id == this.id);
+        this.transactions = this.account.transactions;
+
         this.transactions.sort((a, b) => b.id - a.id);
         setTimeout(() => (this.loading = false), 300);
       })

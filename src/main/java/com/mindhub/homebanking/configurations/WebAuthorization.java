@@ -26,9 +26,8 @@ class WebAuthorization {
                 // Rutas Públicas (Acceso sin autenticación) solicitud de registro y logueo.
                 .antMatchers(
                         HttpMethod.POST,
-                        "/api/clients", // Registro de clientes // ROLES
-                        "/api/clients/current/**", // Registro de cuentas
-                        "/api/login" // Logueo
+                        "/api/clients" // Registro de clientes // ROLES
+
                 ).permitAll()
                 .antMatchers(
                         "/web/index.html",
@@ -51,14 +50,13 @@ class WebAuthorization {
 
                 // Rutas Autenticadas (Requieren autenticación)
                 .antMatchers(
-                        "/api/logout/",
                         "/web/pages/**",
-                        "/api/clients/current/accounts",
-                        "/api/clients/current/accounts/transaction"
-                ).authenticated()
+                        "/api/clients/current/**",
+                        "/api/loans"// Registro de cuentas
+                ).hasAuthority("CLIENT")
 
                 // Ruta Denegada si no coincide con las rutas previamente definidas (Sin acceso)
-                .antMatchers("/api", "/rest").denyAll(); // anyrequest deny all
+              .anyRequest().denyAll();
 
 
         http.formLogin() // Configura el inicio de sesion basado en formulario en mi pagina web
@@ -74,12 +72,12 @@ class WebAuthorization {
 
         // turn off checking for CSRF tokens
 
-        http.csrf().disable(); // Desactivamos el Token del formulario.  Cross-Site Request Forgery
+        http.csrf().disable(); // Desactivamos el Token del formulario(No creamos formulario desde el back)
 
 
         //disabling frameOptions so h2-console can be accessed
 
-        http.headers().frameOptions().disable(); // Desabilito el marco, la posibilidad de trabajar con una web externo.
+        http.headers().frameOptions().disable(); // Deshabilitamos las restricciones para la carga de contenido Iframe  (Click Jacking)
 
         // if user is not authenticated, just send an authentication failure response
 

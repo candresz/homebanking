@@ -20,7 +20,6 @@ public class ClientLoanDTO {
         amount = clientLoan.getAmount();
         payments = clientLoan.getPayments();
 
-
     }
 
     public Long getID() {

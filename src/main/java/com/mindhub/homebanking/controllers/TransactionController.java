@@ -29,7 +29,7 @@ public class TransactionController {
     @Autowired
     private ClientRepository clientRepository;
     @Autowired
-    TransactionRepository transactionRepository;
+    private TransactionRepository transactionRepository;
 
     LocalDateTime now = LocalDateTime.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -37,20 +37,20 @@ public class TransactionController {
     LocalDateTime formattedLocalDateTime = LocalDateTime.parse(formattedDateTime, formatter);
     @Transactional
     @PostMapping("/clients/current/transaction")
-    public ResponseEntity<Object> newTransaction(@RequestParam Double amount, @RequestParam String description, @RequestParam String fromAccount, @RequestParam String toAccount, Authentication authentication) {
+    public ResponseEntity<String> newTransaction(@RequestParam Double amount, @RequestParam String description, @RequestParam String fromAccount, @RequestParam String toAccount, Authentication authentication) {
 
         Client client = clientRepository.findByEmail(authentication.getName()); // Cliente autenticado
 
         if (amount <= 0) {
             return new ResponseEntity<>("The amount must not be zero", HttpStatus.FORBIDDEN);
         }
-        if (description.isEmpty()) {
+        if (description.isBlank()) {
             return new ResponseEntity<>("Fill description field", HttpStatus.FORBIDDEN);
         }
         if (fromAccount.isEmpty()) {
             return new ResponseEntity<>("Fill 'FROM' account field", HttpStatus.FORBIDDEN);
         }
-        if (toAccount.isEmpty()) {
+        if (toAccount.isBlank()) {
             return new ResponseEntity<>("Fill 'TO' account field", HttpStatus.FORBIDDEN);
         }
 
@@ -78,7 +78,7 @@ public class TransactionController {
         }
 
         // Crear la transacción de débito
-        Transaction debitTransaction = new Transaction(TransactionType.DEBIT, amount, formattedLocalDateTime, description);
+        Transaction debitTransaction = new Transaction(TransactionType.DEBIT, -amount, formattedLocalDateTime, description);
         sAccount.addTransaction(debitTransaction);
 
         sAccount.setBalance(sAccount.getBalance() - amount);

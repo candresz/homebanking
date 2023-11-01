@@ -489,8 +489,8 @@ label {
   gap: 3rem;
 }
 .bankImg > img {
-  max-width: 40rem;
-  max-height: rem;
+  max-width: 100%;
+  max-height: 100%;
 }
 .registerImg {
   display: inline-block; /* Para que el contenedor abarque solo el tamaño de la imagen */
@@ -580,4 +580,13 @@ label {
 
 .custom-submit-button:hover {
   background-color: #003f80; /* Cambio de color de fondo al hacer hover */
+}
+.active-link {
+  color: black !important;
+}
+.red {
+  color: red;
+}
+.green {
+  color: green;
 }
