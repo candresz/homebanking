@@ -590,3 +590,7 @@ label {
 .green {
   color: green;
 }
+.amountColor {
+  color: black;
+  font-style: oblique;
+}

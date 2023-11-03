@@ -57,11 +57,11 @@ public class LoanController {
         }
 
         if (loanApplication.getAmount() <= 0) {
-            return new ResponseEntity<>("The amount must not be zero", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Amount must not be zero", HttpStatus.FORBIDDEN);
         }
 
         if (loanApplication.getPayments() <= 0) {
-            return new ResponseEntity<>("The payments amount must not be zero", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Payment amount must not be zero", HttpStatus.FORBIDDEN);
         }
 
         // Verifico que exista el prestamo
@@ -83,9 +83,10 @@ public class LoanController {
 
         Account toAccount = accountRepository.findByNumber(loanApplication.getToAccount());
         if (!client.getAccounts().contains(toAccount)) {
-            return new ResponseEntity<>("The account does not belong ", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("The account does not belong client", HttpStatus.FORBIDDEN);
         }
 
+        // Agrego el 20%
         double add20 = loanApplication.getAmount() * 1.2;
 
 

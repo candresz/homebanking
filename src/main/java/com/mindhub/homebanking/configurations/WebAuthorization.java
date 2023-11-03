@@ -22,12 +22,11 @@ class WebAuthorization {
 
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception { // Una clase de Spring Security me permite configurar seguridad en relacion
         // a las solicitudes HTTP.
-        http.authorizeRequests() // Autoriza peticiones, permite definir reglas de autorización
-                // Rutas Públicas (Acceso sin autenticación) solicitud de registro y logueo.
+        http.authorizeRequests()
+                // Rutas Públicas (Acceso sin autenticación)
                 .antMatchers(
                         HttpMethod.POST,
-                        "/api/clients" // Registro de clientes // ROLES
-
+                        "/api/clients" // Registro de clientes
                 ).permitAll()
                 .antMatchers(
                         "/web/index.html",
@@ -37,26 +36,26 @@ class WebAuthorization {
                         "/web/js/**",
                         "/web/img/**"
                 ).permitAll()
-
                 // Rutas de Administrador
                 .antMatchers(
                         "/h2-console/**",
                         "/rest/**",
                         "/web/pages/manager.html"
                 ).hasAuthority("ADMIN")
-
                 // Rutas de Solo Lectura para Administradores(Obtener listado de clientes)
-                .antMatchers(HttpMethod.GET, "/api/clients").hasAuthority("ADMIN")
-
+                .antMatchers(HttpMethod.GET, "/api/clients", "/api/loans").hasAuthority("ADMIN")
                 // Rutas Autenticadas (Requieren autenticación)
                 .antMatchers(
                         "/web/pages/**",
-                        "/api/clients/current/**",
-                        "/api/loans"// Registro de cuentas
+                        "/api/clients/current/**"
                 ).hasAuthority("CLIENT")
+                // Restringir el acceso a /api/loans solo a CLIENT (si es necesario)
+                .antMatchers(HttpMethod.GET, "/api/loans").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/loans").hasAuthority("CLIENT")
 
                 // Ruta Denegada si no coincide con las rutas previamente definidas (Sin acceso)
-              .anyRequest().denyAll();
+                .anyRequest().denyAll();
+
 
 
         http.formLogin() // Configura el inicio de sesion basado en formulario en mi pagina web
@@ -79,7 +78,7 @@ class WebAuthorization {
 
         http.headers().frameOptions().disable(); // Deshabilitamos las restricciones para la carga de contenido Iframe  (Click Jacking)
 
-        // if user is not authenticated, just send an authentication failure response
+        // if user is not authenticated, just send an authentication failure response  //PETICION A RUTA NO AUTENTICADO
 
         http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
 
@@ -87,7 +86,7 @@ class WebAuthorization {
 
         http.formLogin().successHandler((req, res, auth) -> clearAuthenticationAttributes(req));
 
-        // if login fails, just send an authentication failure response
+        // if login fails, just send an authentication failure response  //SI FALLA EL LOGUEO
 
         http.formLogin().failureHandler((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
 

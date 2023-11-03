@@ -52,12 +52,12 @@
               >
             </li>
             <li class="nav-item navFlex">
-              <a class="nav-link" href="#">
+              <a class="nav-link active-link" href="#">
                 <i class="bi bi-currency-dollar"></i>Loans</a
               >
             </li>
             <li class="nav-item navFlex">
-              <a class="nav-link active-link" href="#">
+              <a class="nav-link" href="./transfers.html">
                 <i class="bi bi-arrow-left-right"></i>Transactions</a
               >
             </li>
@@ -73,118 +73,108 @@
         </ul>
       </nav>
       <main class="min-vh-100 bg-light">
-        <div class="container">
+        <div class="container min-vh-100 mb-3">
           <div
             class="d-flex flex-column justify-content-center align-items-center flex-md-row containerIndex min-vh-100"
           >
             <div class="bankImg">
               <img
                 class="registerImg"
-                src="../img/grafika_banking.png"
+                src="../img/a7a9f960-3160-11ee-97e0-21509f7b9025.jpeg"
                 alt="Women using phone"
               />
             </div>
             <div class="custom-form-container">
               <div class="custom-form-section">
-                <label for="transactionType">Transaction Type</label>
+                <label for="loanType">Loan Type</label>
                 <select
-                  name="transactionType"
+                  name="loanType"
                   class="custom-select-box"
-                  id="transactionType"
-                  v-model="transactionType"
+                  id="loanType"
+                  v-model="loanType"
                 >
-                  <option value="bAccounts">Between my accounts</option>
-                  <option value="oAccounts">Others accounts</option>
+                  <option value="1">Mortgage</option>
+                  <option value="2">Personal</option>
+                  <option value="3">Car</option>
                 </select>
-                <label v-if="transactionType == 'bAccounts'" for="fromAccount"
-                  >From Account</label
+
+                <label v-if="selectedLoan" for="payments"
+                  >{{ selectedLoan.name }} Payment Options</label
                 >
+
                 <select
-                  v-if="transactionType == 'bAccounts'"
-                  v-model="fromAccount"
+                  v-if="selectedLoan"
+                  v-model="payments"
                   class="custom-select-box"
                 >
-                  <option value="">From Account</option>
-                  <option
-                    v-for="account in client.accounts"
-                    :value="account.number"
-                  >
-                    {{ account.number }}
+                  <option disabled>
+                    Select {{ selectedLoan.name }} Payment
+                  </option>
+                  <option v-for="payment in selectedLoan.payments">
+                    {{ payment }}
                   </option>
                 </select>
 
-                <label v-if="transactionType == 'bAccounts'" for="toAccount"
-                  >To Account</label
+                <label v-if="selectedLoan" for="payments" class="amountColor">
+                  {{ selectedLoan.name }} Max Amount: ${{ selectedLoan.maxAmount
+                  }}</label
                 >
-                <select
-                  v-if="transactionType == 'bAccounts'"
-                  v-model="toAccount"
-                  class="custom-select-box"
-                >
-                  <option value="">To Account</option>
-                  <option
-                    v-for="account in client.accounts"
-                    :value="account.number"
-                    :disabled="account.number == fromAccount"
-                  >
-                    {{ account.number }}
-                  </option>
-                </select>
-                <label v-if="transactionType == 'oAccounts'" for="fromAccount"
-                  >From Account</label
-                >
-                <select
-                  v-if="transactionType == 'oAccounts'"
-                  v-model="fromAccount"
-                  class="custom-select-box"
-                >
-                  <option value="">From Account</option>
-                  <option
-                    v-for="account in client.accounts"
-                    :value="account.number"
-                  >
-                    {{ account.number }}
-                  </option>
-                </select>
-                <label v-if="transactionType == 'oAccounts'" for="toAccount"
-                  >To Account</label
-                >
-                <input
-                  v-if="transactionType == 'oAccounts'"
-                  class="custom-input-field"
-                  type="text"
-                  placeholder="To Account"
-                  name="toAccount"
-                  v-model="toAccount"
-                />
-
                 <label for="amount">Amount</label>
                 <input
                   class="custom-input-field"
                   type="number"
                   id="amount"
-                  placeholder="Monto"
+                  placeholder="Amount"
                   min="1"
                   name="amount"
                   v-model="amount"
                 />
-                <input
-                  class="custom-input-field"
-                  type="text"
-                  placeholder="Description"
-                  name="description"
-                  v-model="description"
-                />
-
-                <button
-                  class="custom-submit-button"
-                  type="submit"
-                  @click="createTransfer"
+                <label v-if="loans && loanType && amount" for="toAccount"
+                  >To Account</label
                 >
-                  Enviar
-                </button>
+                <select v-model="toAccount" class="custom-select-box">
+                  <option
+                    v-for="account in client.accounts"
+                    :value="account.number"
+                  >
+                    {{ account.number }}
+                  </option>
+                </select>
               </div>
+              <button
+                class="custom-submit-button"
+                type="button"
+                @click="createLoan"
+              >
+                Request Loan
+              </button>
             </div>
+          </div>
+          <div
+            class="d-flex flex-column justify-content-center align-items-center p-3"
+            v-if="loans && loanType && amount"
+          >
+            <h2>Installment Amount and Total Payment</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Installment</th>
+                  <th>Amount to Pay</th>
+                  <th>Remaining Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(payment, index) in paymentsTableArray" :key="index">
+                  <td>{{ index + 1 }}</td>
+                  <!-- Installment number -->
+                  <td>{{ (amount * 1.2) / paymentsTableArray.length }}</td>
+                  <td>
+                    {{ (amount * 1.2) - (((amount * 1.2) /
+                    paymentsTableArray.length) * index) }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </main>
@@ -201,6 +191,6 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-    <script src="../js/transfers.js"></script>
+    <script src="../js/loans.js"></script>
   </body>
 </html>
