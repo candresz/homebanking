@@ -35,43 +35,43 @@ createApp({
       });
     },
     createTransfer() {
-      if (this.transactionType === "") {
-        Swal.fire("Please complete 'Transaction Type'");
-      } else if (this.fromAccount === "") {
-        Swal.fire("Please complete 'From Account'");
-      } else if (this.toAccount === "") {
-        Swal.fire("Please complete 'To Account'");
-      } else if (this.amount === "") {
-        Swal.fire("Please complete 'Amount'");
-      } else if (this.amount <= 0) {
-        Swal.fire("Please 'Amount must not be zero'");
-      } else if (this.description === "") {
-        Swal.fire("Please complete 'Description'");
-      } else {
-        Swal.fire({
-          title: "Loan Application Confirmation",
-          text: "Do you want to submit the loan application?",
-          icon: "question",
-          showCancelButton: true,
-          confirmButtonText: "Yes",
-          cancelButtonText: "No",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            axios
-              .post(
-                `/api/clients/current/transaction?amount=${this.amount}&description=${this.description}&fromAccount=${this.fromAccount}&toAccount=${this.toAccount}`
-              )
-              .then((response) => {
-                this.getClient(); // Una vez creada la transferencia, hacemos una solicitud get nuevamente para obtener los datos actualizados.
-                location.pathname = "/web/pages/accounts.html";
-              })
-              .catch((error) => {
-                console.error("Error:", error);
-              });
-          }
-        });
-      }
+      Swal.fire({
+        title: "Are you sure you want to request the loan?",
+        icon: "warning",
+        iconColor: "#fff",
+        showCancelButton: true,
+        background: "#0056b3",
+        confirmButtonColor: "#003f80",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, request loan",
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .post(
+              `/api/clients/current/transaction?amount=${this.amount}&description=${this.description}&fromAccount=${this.fromAccount}&toAccount=${this.toAccount}`
+            )
+            .then((response) => {
+              this.getClient(); // Una vez creada la transferencia, hacemos una solicitud get nuevamente para obtener los datos actualizados.
+              location.pathname = "/web/pages/accounts.html";
+            })
+            .catch((error) => {
+              console.log(error);
+              this.errorMessage(error.response.data);
+            });
+        }
+      });
+    },
+    errorMessage(message) {
+      Swal.fire({
+        icon: "error",
+        iconColor: "#fff",
+        title: "An error has occurred",
+        text: message,
+        color: "#fff",
+        background: "#0056b3",
+        confirmButtonColor: "#17acc9",
+      });
     },
   },
-  computed: {},
 }).mount("#app");

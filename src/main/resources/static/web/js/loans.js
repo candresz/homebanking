@@ -30,8 +30,9 @@ createApp({
       this.remainingAmount = this.totalAmount * 1.2;
     },
     loanType(newLoanType) {
+      // Cada vez que loanType cambie de tipo de loan(id String), el selectedLoan se va actualizar y va a obtener el loan con relacion al id.
+      // El comparador no es estricto ya que el LoanType es un string. Y el newLoanType es el valor de loanType
       this.selectedLoan = this.loans.find((loan) => loan.id == newLoanType);
-      console.log(this.selectedLoan);
     },
   },
   methods: {
@@ -66,46 +67,55 @@ createApp({
       });
     },
     createLoan() {
-      if (this.loanType === "") {
-        Swal.fire("Please complete 'Loan Type'");
-      } else if (this.amount === "") {
-        Swal.fire("Please complete 'Amount'");
-      } else if (this.payments === "") {
-        Swal.fire("Please complete 'Payments'");
-      } else if (this.toAccount === "") {
-        Swal.fire("Please complete 'To Account'");
-      } else {
-        Swal.fire({
-          title: "Loan Application Confirmation",
-          text: "Do you want to submit the loan application?",
-          icon: "question",
-          showCancelButton: true,
-          confirmButtonText: "Yes",
-          cancelButtonText: "No",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            // El usuario eligió enviar la solicitud de préstamo
-            const newLoan = {
-              loanId: this.loanType,
-              amount: this.amount,
-              payments: this.payments,
-              toAccount: this.toAccount,
-            };
-            axios
-              .post("/api/loans", newLoan)
-              .then((response) => {
-                this.getClient();
-                location.pathname = "/web/pages/accounts.html";
-              })
-              .catch((error) => {
-                console.log("Error registering loan:", error);
+      Swal.fire({
+        title: "Are you sure you want to request the loan?",
+        icon: "warning",
+        iconColor: "#fff",
+        showCancelButton: true,
+        background: "#0056b3",
+        confirmButtonColor: "#003f80",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, request loan",
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const loanBody = {
+            loanId: this.loanType,
+            amount: this.amount,
+            payments: this.payments,
+            toAccount: this.toAccount,
+          };
+
+          axios
+            .post("/api/loans", loanBody)
+            .then((response) => {
+              console.log("Loan " + response);
+              Swal.fire({
+                icon: "success",
+                title: "Loan requested",
+                text: "Your loan request has been sent successfully.",
+                confirmButtonColor: "#003f80",
+                background: "#1c2754",
               });
-          } else if (result.isDismissed) {
-            // El usuario eligio no enviar la solicitud de prestamo
-          }
-        });
-      }
+              location.pathname = "/web/pages/accounts.html";
+            })
+            .catch((error) => {
+              console.log(error);
+              this.errorMessage(error.response.data);
+            });
+        }
+      });
+    },
+    errorMessage(message) {
+      Swal.fire({
+        icon: "error",
+        iconColor: "#fff",
+        title: "An error has occurred",
+        text: message,
+        color: "#fff",
+        background: "#0056b3",
+        confirmButtonColor: "#17acc9",
+      });
     },
   },
-  computed: {},
 }).mount("#app");

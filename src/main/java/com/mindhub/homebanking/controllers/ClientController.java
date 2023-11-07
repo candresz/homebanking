@@ -5,6 +5,9 @@ import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
+import com.mindhub.homebanking.services.implement.ClientServiceImplement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,10 +23,10 @@ import java.util.stream.Stream;
 @RestController // Clase como controlador bajo los parametros de REST(HTTP)/ le digo que esta clase va hacer el controlador.
 @RequestMapping("/api/clients") // Asocio las peticiones a esta ruta(base).
 public class ClientController {
-    @Autowired //Injeccion de dependencias, le pedimos a Spring Boot que introduzca ClientRepository en esta clase.
-    private ClientRepository clientRepository;
+    @Autowired //Injeccion de dependencias
+    private ClientService clientService;
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountService accountService;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -33,17 +36,12 @@ public class ClientController {
 
     @GetMapping // Serverless es todo junto, metodo y EndPoint.
     public List<ClientDTO> getAllClients() { // Esto solo es un metodo devuelve una lista de ClientDTO
-        List<Client> clients = clientRepository.findAll(); //Le pido al JPARepository el listado de todos los clientes
-        Stream<Client> clientStream = clients.stream();
-        Stream<ClientDTO> clientDTOStream = clientStream.map(ClientDTO::new);
-        return clientDTOStream.collect(Collectors.toList());
+        return clientService.getAllClientsDTO();
     }
 
     @GetMapping("/{id}") // Endpoint.
     public ClientDTO getClientById(@PathVariable Long id) { //PathVariable toma el valor de la URL(id)
-        return clientRepository.findById(id)
-                .map(ClientDTO::new) // Convierte el cliente a un DTO
-                .orElse(null); // Si no se encuentra, retorna null
+        return clientService.findClientDTOById(id);
     }
 
     @PostMapping // Solicitud a ruta principal /api/clients
@@ -63,7 +61,7 @@ public class ClientController {
             return new ResponseEntity<>("Type your password", HttpStatus.FORBIDDEN);
         }
 
-        if (clientRepository.findByEmail(email) != null) {
+        if (clientService.findClientByEmail(email) != null) {
             return new ResponseEntity<>("Email already in use", HttpStatus.FORBIDDEN);
         }
 
@@ -76,10 +74,10 @@ public class ClientController {
             accountNumber = getRandomNumber(0, 99999999); // Hacemos uso del metodo getRandomNumber previamente escrito.
             accountNumberString = String.valueOf(accountNumber); // tipos primitivos no tienen toString().
 //          String vin = "VIN-" + accountNumber;
-        } while (accountRepository.existsByNumber(accountNumberString));
+        } while (accountService.existsAccountByNumber(accountNumberString));
 
 
-        if (accountRepository.existsByNumber(accountNumberString) ) {
+        if (accountService.existsAccountByNumber(accountNumberString) ) {
             return new ResponseEntity<>("Account already in use", HttpStatus.FORBIDDEN);
         }
 
@@ -88,9 +86,9 @@ public class ClientController {
         Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password), false);
         Account account = new Account(accountNumberString, LocalDate.now(), 0);
         client.addAccount(account);
-        clientRepository.save(client);
+        clientService.saveClient(client);
 
-        accountRepository.save(account);
+        accountService.saveAccount(account);
 
         return new ResponseEntity<>("Client created successfully", HttpStatus.CREATED);
     }
@@ -99,6 +97,6 @@ public class ClientController {
     //// Interfaz que representa los detalles del usuario autenticado
     // Obtenemos un ClientDTO Autenticado
     public ClientDTO getClientCurrent(Authentication authentication) {
-        return new ClientDTO(clientRepository.findByEmail(authentication.getName()));
+        return new ClientDTO(clientService.findClientByEmail(authentication.getName()));
     }
 }

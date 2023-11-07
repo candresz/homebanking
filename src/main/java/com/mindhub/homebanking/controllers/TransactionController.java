@@ -7,6 +7,10 @@ import com.mindhub.homebanking.models.TransactionType;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
+import com.mindhub.homebanking.services.TransactionService;
+import com.mindhub.homebanking.services.implement.ClientServiceImplement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +29,11 @@ import java.time.format.DateTimeFormatter;
 public class TransactionController {
 
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountService accountService;
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
     @Autowired
-    private TransactionRepository transactionRepository;
+    private TransactionService transactionService;
 
     LocalDateTime now = LocalDateTime.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -39,7 +43,7 @@ public class TransactionController {
     @PostMapping("/clients/current/transaction")
     public ResponseEntity<String> newTransaction(@RequestParam Double amount, @RequestParam String description, @RequestParam String fromAccount, @RequestParam String toAccount, Authentication authentication) {
 
-        Client client = clientRepository.findByEmail(authentication.getName()); // Cliente autenticado
+        Client client = clientService.findClientByEmail(authentication.getName()); // Cliente autenticado
 
         if (amount <= 0) {
             return new ResponseEntity<>("The amount must not be zero", HttpStatus.FORBIDDEN);
@@ -58,7 +62,7 @@ public class TransactionController {
             return new ResponseEntity<>("Same accounts numbers", HttpStatus.FORBIDDEN);
         }
 
-        Account sAccount = accountRepository.findByNumber(fromAccount); // Cuenta origen
+        Account sAccount = accountService.findAccountByNumber(fromAccount); // Cuenta origen
         if (sAccount == null) {
             return new ResponseEntity<>("Sender account does not exists", HttpStatus.FORBIDDEN);
         }
@@ -68,7 +72,7 @@ public class TransactionController {
             return new ResponseEntity<>("Account does not belong to the authenticated client", HttpStatus.FORBIDDEN);
         }
 
-        Account rAccount = accountRepository.findByNumber(toAccount); // Cuenta destino
+        Account rAccount = accountService.findAccountByNumber(toAccount); // Cuenta destino
         if (rAccount == null) {
             return new ResponseEntity<>("Recipient account does not exists", HttpStatus.FORBIDDEN);
         }
@@ -82,7 +86,7 @@ public class TransactionController {
         sAccount.addTransaction(debitTransaction);
 
         sAccount.setBalance(sAccount.getBalance() - amount);
-        transactionRepository.save(debitTransaction);
+        transactionService.saveTransaction(debitTransaction);
 
         // Crear la transacción de crédito
         Transaction creditTransaction = new Transaction(TransactionType.CREDIT, amount, formattedLocalDateTime, description);
@@ -90,7 +94,7 @@ public class TransactionController {
 
 
         rAccount.setBalance(rAccount.getBalance() + amount);
-        transactionRepository.save(creditTransaction);
+        transactionService.saveTransaction(creditTransaction);
 
 
         return new ResponseEntity<>("Transfer successfully", HttpStatus.CREATED);

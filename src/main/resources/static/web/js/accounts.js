@@ -30,22 +30,39 @@ createApp({
       });
     },
     createAccount() {
-      axios
-        .post("/api/clients/current/accounts")
-        .then((response) => {
-          this.getClient(); // Una vez creada la cuenta, hacemos una solicitud get nuevamente para obtener los datos actualizados.
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          if (error.response.status === 403) {
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "You already have the maximum amount of accounts (3)",
-              color: "#fff",
+      Swal.fire({
+        title: "Are you sure you want to request a new account?",
+        icon: "warning",
+        iconColor: "#fff",
+        background: "#0056b3",
+        showCancelButton: true,
+        confirmButtonColor: "#003f80",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, request account",
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .post("/api/clients/current/accounts")
+            .then((response) => {
+              this.getClient(); // Una vez creada la cuenta, hacemos una solicitud get nuevamente para obtener los datos actualizados.
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              this.errorMessage(error.response.data);
             });
-          }
-        });
+        }
+      });
+    },
+    errorMessage(message) {
+      Swal.fire({
+        icon: "error",
+        iconColor: "#fff",
+        title: "An error has occurred",
+        text: message,
+        confirmButtonColor: "#17acc9",
+        background: "#0056b3",
+      });
     },
   },
   computed: {

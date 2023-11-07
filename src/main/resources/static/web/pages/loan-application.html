@@ -93,9 +93,9 @@
                   id="loanType"
                   v-model="loanType"
                 >
-                  <option value="1">Mortgage</option>
-                  <option value="2">Personal</option>
-                  <option value="3">Car</option>
+                  <option v-for="loan in loans" :value="loan.id">
+                    {{ loan.name }}
+                  </option>
                 </select>
 
                 <label v-if="selectedLoan" for="payments"
@@ -154,8 +154,8 @@
             class="d-flex flex-column justify-content-center align-items-center p-3"
             v-if="loans && loanType && amount"
           >
-            <h2>Installment Amount and Total Payment</h2>
-            <table>
+            <h2 v-if="amount > 1">Installment Amount and Total Payment</h2>
+            <table v-if="amount > 1">
               <thead>
                 <tr>
                   <th>Installment</th>

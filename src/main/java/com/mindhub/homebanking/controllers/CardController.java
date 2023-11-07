@@ -4,6 +4,9 @@ import com.mindhub.homebanking.dto.ClientDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.CardService;
+import com.mindhub.homebanking.services.ClientService;
+import com.mindhub.homebanking.services.implement.ClientServiceImplement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +26,9 @@ import java.util.stream.Collectors;
 public class CardController {
 
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
     @Autowired
-    private CardRepository cardRepository;
+    private CardService cardService;
 
 
     // Metodo para generar un número de tarjeta de crédito aleatorio
@@ -46,7 +49,7 @@ public class CardController {
                     cardNumber.append("-"); // Agregar un guión después de cada 4 iteraciones.
                 }
             }
-        } while (cardRepository.existsByNumber(cardNumber.toString()));
+        } while (cardService.existsCardByNumber(cardNumber.toString()));
 
         return cardNumber.toString();
     }
@@ -63,7 +66,7 @@ public class CardController {
                 cardCvvNumber.append(digit); // El número generado lo guardamos con .append gracias a StringBuilder
 
             }
-        } while (cardRepository.existsByNumber(cardCvvNumber.toString()));
+        } while (cardService.existsCardByNumber(cardCvvNumber.toString()));
 
         return cardCvvNumber.toString();
     }
@@ -79,7 +82,7 @@ public class CardController {
             return new ResponseEntity<>("You must choose a card color.", HttpStatus.FORBIDDEN);
         }
 
-        Client client = clientRepository.findByEmail(authentication.getName());
+        Client client = clientService.findClientByEmail(authentication.getName());
 
         int numberOfCardType =
                 (int) client.getCards().stream().filter(card -> card.getCardType().equals(CardType.valueOf(cardType))).count();
@@ -90,8 +93,8 @@ public class CardController {
 
         Card card = new Card(client.fullName(), CardType.valueOf(cardType), CardColor.valueOf(cardColor), generateRandomCardNumber(), generateRandomCvvNumber(), LocalDate.now().plusYears(5), LocalDate.now());
         client.addCard(card);
-        cardRepository.save(card);
-        clientRepository.save(client);
+        cardService.saveCard(card);
+        clientService.saveClient(client);
 
         return new ResponseEntity<>("Card created successfully",HttpStatus.CREATED);
     }
