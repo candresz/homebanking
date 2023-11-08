@@ -23,7 +23,6 @@ import static com.mindhub.homebanking.models.TransactionType.DEBIT;
 @SpringBootApplication
 public class HomebankingApplication {
 
-
     public static void main(String[] args) {
         SpringApplication.run(HomebankingApplication.class, args);
     }
