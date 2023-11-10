@@ -93,7 +93,7 @@ public class ClientController {
         return new ResponseEntity<>("Client created successfully", HttpStatus.CREATED);
     }
 
-    @RequestMapping("/current") // authentication es la cookie, contiene el token e informacion del usuario.
+    @GetMapping("/current") // authentication es la cookie, contiene el token e informacion del usuario.
     //// Interfaz que representa los detalles del usuario autenticado
     // Obtenemos un ClientDTO Autenticado
     public ClientDTO getClientCurrent(Authentication authentication) {
