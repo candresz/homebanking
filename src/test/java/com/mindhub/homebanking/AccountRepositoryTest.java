@@ -10,7 +10,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static java.util.Optional.empty;
+import static java.util.function.Predicate.not;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -36,9 +39,9 @@ public class AccountRepositoryTest {
     }
 
     @Test
-    public void validEmail() {
+    public void accountHasClient() {
         for (Account account : accounts) {
-            assertTrue(account.getBalance() >= 1);
+            assertNotNull(account.getClient());
         }
     }
 }
