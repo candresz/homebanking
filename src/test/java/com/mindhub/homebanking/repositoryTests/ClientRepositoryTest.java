@@ -1,41 +1,41 @@
-package com.mindhub.homebanking;
+package com.mindhub.homebanking.repositoryTests;
 
-import com.mindhub.homebanking.models.Card;
-import com.mindhub.homebanking.repositories.CardRepository;
+import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.repositories.ClientRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
 import java.util.List;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+
+
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class CardRepositoryTest {
+public class ClientRepositoryTest {
     @Autowired
-    CardRepository cardRepository;
+    ClientRepository clientRepository;
 
-    List<Card> cards;
+    List<Client> clients;
 
     @BeforeEach
-    public void getCards() {
-        cards = cardRepository.findAll();
+    public void getAllClients() {
+      clients =  clientRepository.findAll();
     }
 
     @Test
-    public void isCardsEmpty() {
-        assertThat(cards,is(not(empty())));
+    public void isEmpty() {
+        assertThat(clients, is(not(empty())));
     }
 
     @Test
-    public void cardNumberLength(){
-        for(Card card : cards){
-            assertTrue(card.getCvv().length() > 3);
+    public void validEmail() {
+        for (Client client : clients) {
+            assertThat(client.getEmail(), containsString("@"));
         }
     }
 }

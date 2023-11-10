@@ -18,6 +18,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.mindhub.homebanking.utils.TransactionUtils.dateTime;
+
 @RestController
 @RequestMapping("/api")
 public class LoanController {
@@ -34,11 +36,6 @@ public class LoanController {
     @Autowired
     private TransactionService transactionService;
 
-
-    LocalDateTime now = LocalDateTime.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    String formattedDateTime = now.format(formatter);
-    LocalDateTime formattedLocalDateTime = LocalDateTime.parse(formattedDateTime, formatter);
 
 
     @GetMapping("/loans")
@@ -94,7 +91,7 @@ public class LoanController {
 
 
         // Crear la transacción de crédito
-        Transaction creditTransaction = new Transaction(TransactionType.CREDIT, loanApplication.getAmount(), formattedLocalDateTime, loan.getName() + " Loan approved");
+        Transaction creditTransaction = new Transaction(TransactionType.CREDIT, loanApplication.getAmount(), dateTime(), loan.getName() + " Loan approved");
         toAccount.addTransaction(creditTransaction);
         transactionService.saveTransaction(creditTransaction);
 

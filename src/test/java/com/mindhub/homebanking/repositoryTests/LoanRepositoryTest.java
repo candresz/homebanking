@@ -1,41 +1,42 @@
-package com.mindhub.homebanking;
+package com.mindhub.homebanking.repositoryTests;
 
-import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.models.Loan;
+import com.mindhub.homebanking.repositories.LoanRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
 import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-
-
-
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class ClientRepositoryTest {
-    @Autowired
-    ClientRepository clientRepository;
+public class LoanRepositoryTest {
 
-    List<Client> clients;
+    @Autowired
+    LoanRepository loanRepository;
+
+    List<Loan> loans;
 
     @BeforeEach
-    public void getAllClients() {
-      clients =  clientRepository.findAll();
+    public void getLoans() {
+        loans = loanRepository.findAll();
     }
 
     @Test
     public void isEmpty() {
-        assertThat(clients, is(not(empty())));
+        assertThat(loans, is(not(empty())));
     }
 
     @Test
-    public void validEmail() {
-        for (Client client : clients) {
-            assertThat(client.getEmail(), containsString("@"));
+    public void maxAmount() {
+        for (Loan loan : loans) {
+            assertTrue(loan.getMaxAmount() > 500000);
         }
     }
 }

@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static com.mindhub.homebanking.utils.TransactionUtils.dateTime;
+
 @RestController
 @RequestMapping("/api")
 public class TransactionController {
@@ -35,10 +37,7 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
-    LocalDateTime now = LocalDateTime.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    String formattedDateTime = now.format(formatter);
-    LocalDateTime formattedLocalDateTime = LocalDateTime.parse(formattedDateTime, formatter);
+
     @Transactional
     @PostMapping("/clients/current/transaction")
     public ResponseEntity<String> newTransaction(@RequestParam Double amount, @RequestParam String description, @RequestParam String fromAccount, @RequestParam String toAccount, Authentication authentication) {
@@ -82,14 +81,14 @@ public class TransactionController {
         }
 
         // Crear la transacción de débito
-        Transaction debitTransaction = new Transaction(TransactionType.DEBIT, -amount, formattedLocalDateTime, description);
+        Transaction debitTransaction = new Transaction(TransactionType.DEBIT, -amount, dateTime(), description);
         sAccount.addTransaction(debitTransaction);
 
         sAccount.setBalance(sAccount.getBalance() - amount);
         transactionService.saveTransaction(debitTransaction);
 
         // Crear la transacción de crédito
-        Transaction creditTransaction = new Transaction(TransactionType.CREDIT, amount, formattedLocalDateTime, description);
+        Transaction creditTransaction = new Transaction(TransactionType.CREDIT, amount, dateTime(), description);
         rAccount.addTransaction(creditTransaction);
 
 

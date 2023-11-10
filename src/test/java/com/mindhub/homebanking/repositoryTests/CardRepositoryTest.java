@@ -1,7 +1,7 @@
-package com.mindhub.homebanking;
+package com.mindhub.homebanking.repositoryTests;
 
-import com.mindhub.homebanking.models.Transaction;
-import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.models.Card;
+import com.mindhub.homebanking.repositories.CardRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,29 +12,30 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class TransactionRepositoryTest {
+public class CardRepositoryTest {
     @Autowired
-    TransactionRepository transactionRepository;
+    CardRepository cardRepository;
 
-    List<Transaction> transactions;
+    List<Card> cards;
+
     @BeforeEach
-    public void getTransactions(){
-       transactions = transactionRepository.findAll();
+    public void getCards() {
+        cards = cardRepository.findAll();
     }
 
     @Test
-    public void isEmpty(){
-        assertThat(transactions, is(not(empty())));
+    public void isCardsEmpty() {
+        assertThat(cards,is(not(empty())));
     }
 
     @Test
-    public void validTransaction(){
-        assertThat(transactions, everyItem(hasProperty("description", is(not(empty())))));
+    public void cardNumberLength(){
+        for(Card card : cards){
+            assertTrue(card.getCvv().length() > 3);
+        }
     }
-
 }

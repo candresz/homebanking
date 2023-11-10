@@ -24,6 +24,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.mindhub.homebanking.utils.AccountUtils.generateAccountNumber;
+
 @RestController
 @RequestMapping("/api") // Asocio las peticiones a esta ruta. get,post, etc.
 public class AccountController {
@@ -36,9 +38,7 @@ public class AccountController {
     private ClientService clientService;
 
                                  //  10        100                  // 0 - 1          90       +   10 = 10.25
-    private int getRandomNumber(int min, int max) {
-        return (int) ((Math.random() * (max - min)) + min);
-    }
+
 
     @GetMapping ("/accounts") // Asocio una solicitud get
     public List<AccountDTO> getAllAccounts(){ // Esto solo es un metodo!
@@ -69,12 +69,10 @@ public class AccountController {
         }
 
         // genero un numero de cuenta random
-        int accountNumber;
         String accountNumberString;
 
         do {
-            accountNumber = getRandomNumber(0, 99999999);
-            accountNumberString = String.valueOf(accountNumber);
+            accountNumberString = generateAccountNumber();
         } while (accountService.existsAccountByNumber(accountNumberString));
 
         // Creo la cuenta nueva y la agrego al cliente

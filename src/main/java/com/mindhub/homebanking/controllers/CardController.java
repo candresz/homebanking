@@ -20,6 +20,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.mindhub.homebanking.utils.CardUtils.generateRandomCardNumber;
+import static com.mindhub.homebanking.utils.CardUtils.generateRandomCvvNumber;
+
 
 @RestController
 @RequestMapping("/api/clients")
@@ -32,44 +35,7 @@ public class CardController {
 
 
     // Metodo para generar un número de tarjeta de crédito aleatorio
-    private String generateRandomCardNumber() {
 
-        // String holaMundo = "Hola";
-        //    holaMundo+= "Mundo";
-        StringBuilder cardNumber; // String Builder(Clase de Java) me permite modificar el contenido de mi cadena sin necesitar de instanciar.
-
-
-        do {
-           cardNumber = new StringBuilder(); // Se crea un objeto nuevo cada vez que se completa un numero de tarjeta.
-            for (int i = 0; i < 16; i++) { // 16 iteraciones
-                int digit = (int) (Math.random() * 10); // Genera un número de 0 a 9 y lo guardamos en digit
-                cardNumber.append(digit); // El número generado lo guardamos con .append gracias a StringBuilder
-
-                if ((i + 1) % 4 == 0 && i != 15) {
-                    cardNumber.append("-"); // Agregar un guión después de cada 4 iteraciones.
-                }
-            }
-        } while (cardService.existsCardByNumber(cardNumber.toString()));
-
-        return cardNumber.toString();
-    }
-
-
-    // Metodo para generar un número de tarjeta de crédito aleatorio
-    private String generateRandomCvvNumber() {
-        StringBuilder cardCvvNumber;
-
-        do {
-           cardCvvNumber = new StringBuilder();
-            for (int i = 0; i < 4; i++) { // 16 iteraciones
-                int digit = (int) (Math.random() * 4); // Genera un número de 0 a 9 y lo guardamos en digit
-                cardCvvNumber.append(digit); // El número generado lo guardamos con .append gracias a StringBuilder
-
-            }
-        } while (cardService.existsCardByNumber(cardCvvNumber.toString()));
-
-        return cardCvvNumber.toString();
-    }
 
     @PostMapping("/current/cards")
     public ResponseEntity<String> newCard(@RequestParam String cardType, @RequestParam String cardColor,
@@ -91,12 +57,18 @@ public class CardController {
             return new ResponseEntity<>("You cannot have more than three cards of the same type.", HttpStatus.FORBIDDEN);
         }
 
-        Card card = new Card(client.fullName(), CardType.valueOf(cardType), CardColor.valueOf(cardColor), generateRandomCardNumber(), generateRandomCvvNumber(), LocalDate.now().plusYears(5), LocalDate.now());
+        String cardNumber;
+        do {
+            cardNumber = generateRandomCardNumber();
+        } while (cardService.existsCardByNumber(cardNumber));
+
+
+        Card card = new Card(client.fullName(), CardType.valueOf(cardType), CardColor.valueOf(cardColor), cardNumber, generateRandomCvvNumber(), LocalDate.now().plusYears(5), LocalDate.now());
         client.addCard(card);
         cardService.saveCard(card);
         clientService.saveClient(client);
 
-        return new ResponseEntity<>("Card created successfully",HttpStatus.CREATED);
+        return new ResponseEntity<>("Card created successfully", HttpStatus.CREATED);
     }
 }
 
