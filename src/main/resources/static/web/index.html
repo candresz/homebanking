@@ -16,12 +16,16 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
+    <link rel="shortcut icon" href="./img/logol.png" type="image/x-icon" />
     <link rel="stylesheet" href="./styles/styles.css" />
   </head>
   <body>
     <div id="app">
       <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="#">M Brothers Bank</a>
+        <div class="logo">
+          <img src="./img/logol.png" alt="" />
+        </div>
+
         <button
           class="navbar-toggler"
           type="button"
@@ -71,9 +75,12 @@
         </ul>
       </nav>
       <main class="min-vh-100 bg-light">
-        <div class="container">
+        <div
+          class="container d-flex flex-column justify-content-center align-items-center"
+        >
+          <h1 class="welcome-header">Welcome to M Brothers Bank</h1>
           <div
-            class="d-flex flex-column justify-content-center flex-md-row align-items-center containerMainBank min-vh-100"
+            class="bank-promo d-flex flex-column justify-content-center flex-md-row align-items-center containerMainBank"
           >
             <div class="bankImg">
               <img
@@ -95,6 +102,29 @@
               </p>
             </div>
           </div>
+          <section class="bank-section">
+            <div
+              class="bank-promo d-flex flex-column justify-content-center align-items-center"
+            >
+              <img src="./img/specialoan.jpg" alt="Promotion Image" />
+              <h2>Special Loan Rates</h2>
+              <p>
+                Take advantage of our limited-time offer on home and auto loans.
+                Enjoy lower interest rates and flexible payment terms.
+              </p>
+            </div>
+
+            <div
+              class="bank-promo d-flex flex-column justify-content-center align-items-center"
+            >
+              <img src="./img/creditrewards.jpg" alt="Promotion Image 2" />
+              <h2>Credit Card Rewards</h2>
+              <p>
+                Earn rewards with every purchase on your bank credit card.
+                Redeem points for travel, gift cards, or cash back.
+              </p>
+            </div>
+          </section>
         </div>
       </main>
 

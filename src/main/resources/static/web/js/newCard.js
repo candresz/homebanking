@@ -62,5 +62,11 @@ createApp({
         background: "#0056b3",
       });
     },
+    logOut() {
+      axios.post("/api/logout").then((response) => {
+        console.log("Signed out");
+        location.pathname = "/web/index.html"; // Redirige al usuario a la página de inicio.
+      });
+    },
   },
 }).mount("#app");

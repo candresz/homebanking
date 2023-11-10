@@ -12,7 +12,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
     />
-
+    <link rel="shortcut icon" href="./img/logol.png" type="image/x-icon" />
     <link rel="stylesheet" href="../styles/styles.css" />
   </head>
   <body>
@@ -75,13 +75,11 @@
           <div
             class="d-flex flex-column justify-content-center align-items-center dashboard mb-4 gapContainer"
           >
-            <h1 class="text-center">
-              Banking Dashboard <i class="bi bi-house-lock-fill"></i>
-            </h1>
+            <h1 class="welcome-header">Cards</h1>
             <div v-if="cards.length > 0">
               <h2>Credit Cards</h2>
               <div
-                class="d-flex flex-row justify-content-center align-items-center gapContainer"
+                class="d-flex flex-column flex-md-row justify-content-center align-items-center gapContainer"
               >
                 <div v-for="card of creditCards">
                   <div
@@ -115,6 +113,9 @@
                     <!-- Nombre del titular -->
                     <div class="card-holder">
                       <span>{{card.cardHolder}}</span>
+                    </div>
+                    <div class="card-number d-flex align-items-end">
+                      <span class="cvv">CVV {{card.cvv}}</span>
                     </div>
                     <div
                       class="d-flex justify-content-between align-items-center"
@@ -167,6 +168,9 @@
                     <!-- Nombre del titular -->
                     <div class="card-holder">
                       <span>{{card.cardHolder}}</span>
+                    </div>
+                    <div class="card-number d-flex align-items-end">
+                      <span class="cvv">CVV {{card.cvv}}</span>
                     </div>
                     <div
                       class="d-flex justify-content-between align-items-center"

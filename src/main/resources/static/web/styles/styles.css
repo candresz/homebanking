@@ -311,9 +311,11 @@ tr:hover {
   font-size: 18px;
   font-weight: bold;
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
-
+.cvv {
+  font-weight: bold;
+}
 .expiration {
   font-size: 14px;
   text-align: center;
@@ -593,4 +595,98 @@ label {
 .amountColor {
   color: black;
   font-style: oblique;
+}
+.logo > img {
+  max-width: 5rem;
+  max-height: 5rem;
+}
+.bank-section {
+  font-family: Arial, sans-serif;
+  color: #333;
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.bank-promo {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.bank-promo img {
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.bank-promo h2 {
+  color: #005a97;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.bank-promo p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.bank-promo .promo-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #005a97;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-top: 15px;
+}
+
+.bank-promo .promo-button:hover {
+  background-color: #003f6b;
+}
+
+.benefit-icon {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.benefits-list {
+  list-style: none;
+  padding: 0;
+}
+
+.benefits-list li {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.welcome-header {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  margin-top: 50px;
+  font-size: 2.5rem;
+  color: #003f6b;
+  animation: fadeIn 2s ease-in-out;
+}
+.registerImg {
+  max-width: 100%;
+  max-height: 100%;
+}
+.gap3 {
+  gap: 3rem;
 }
