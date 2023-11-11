@@ -311,7 +311,6 @@ tr:hover {
   font-size: 18px;
   font-weight: bold;
   text-align: center;
-  margin-bottom: 1rem;
 }
 .cvv {
   font-weight: bold;
@@ -689,4 +688,12 @@ label {
 }
 .gap3 {
   gap: 3rem;
+}
+.expiredC {
+  text-decoration: line-through;
+  color: red;
+}
+.cardExpired {
+  background-color: red;
+  color: white;
 }

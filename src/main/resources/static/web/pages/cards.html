@@ -112,16 +112,23 @@
                     <div class="card-type"></div>
                     <!-- Nombre del titular -->
                     <div class="card-holder">
-                      <span>{{card.cardHolder}}</span>
+                      <p class="cardExpired" v-if="localDate > card.thruDate">
+                        CARD EXPIRED
+                      </p>
+                      <span v-else>{{ card.cardHolder }}</span>
                     </div>
                     <div class="card-number d-flex align-items-end">
-                      <span class="cvv">CVV {{card.cvv}}</span>
+                      <span :class="{'expiredC': localDate > card.thruDate}"
+                        >CVV {{card.cvv}}</span
+                      >
                     </div>
                     <div
                       class="d-flex justify-content-between align-items-center"
                     >
                       <div class="card-number">
-                        <span>{{card.number}}</span>
+                        <span :class="{'expiredC': localDate > card.thruDate}"
+                          >{{card.number}}</span
+                        >
                       </div>
                       <!-- Fecha de caducidad -->
                       <div class="expiration">
@@ -167,15 +174,21 @@
                     <div class="card-type"></div>
                     <!-- Nombre del titular -->
                     <div class="card-holder">
-                      <span>{{card.cardHolder}}</span>
+                      <p class="cardExpired" v-if="localDate > card.thruDate">
+                        CARD EXPIRED
+                      </p>
+                      <span v-else>{{ card.cardHolder }}</span>
                     </div>
+
                     <div class="card-number d-flex align-items-end">
-                      <span class="cvv">CVV {{card.cvv}}</span>
+                      <span :class="{'expiredC': localDate > card.thruDate}"
+                        >CVV {{card.cvv}}</span
+                      >
                     </div>
                     <div
                       class="d-flex justify-content-between align-items-center"
                     >
-                      <div class="card-number">
+                      <div :class="{'expiredC': localDate > card.thruDate}">
                         <span>{{card.number}}</span>
                       </div>
                       <!-- Fecha de caducidad -->

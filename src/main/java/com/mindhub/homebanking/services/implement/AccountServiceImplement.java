@@ -3,7 +3,9 @@ package com.mindhub.homebanking.services.implement;
 import com.mindhub.homebanking.dto.AccountDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.repositories.AccountRepository;
+import com.mindhub.homebanking.repositories.TransactionRepository;
 import com.mindhub.homebanking.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ import java.util.stream.Collectors;
 public class AccountServiceImplement implements AccountService {
     @Autowired
     AccountRepository accountRepository;
+    @Autowired
+    TransactionRepository transactionRepository;
 
 
     @Override
@@ -29,10 +33,14 @@ public class AccountServiceImplement implements AccountService {
     }
 
 
-
     @Override
     public Set<Account> getAllAccountsByClient(Client client) {
         return accountRepository.findByClient(client);
+    }
+
+    @Override
+    public Account getAccountById(Long id) {
+        return accountRepository.findById(id).orElse(null);
     }
 
 
@@ -61,6 +69,24 @@ public class AccountServiceImplement implements AccountService {
 
     @Override
     public void saveAccount(Account account) {
-    accountRepository.save(account);
+        accountRepository.save(account);
+    }
+
+    @Override
+    public boolean existsAccountById(Long id) {
+        return accountRepository.existsById(id);
+    }
+
+    @Override
+    public void deletedAccount(long id) {
+        Account account = getAccountById(id);
+        account.setDeleted(true);
+        Set<Transaction> transactions = account.getTransactions();
+        transactions
+                .forEach(transaction -> {
+                    transaction.setDeleted(true);
+                    transactionRepository.save(transaction);
+                });
+        saveAccount(account);
     }
 }

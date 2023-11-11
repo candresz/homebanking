@@ -19,6 +19,17 @@ public class Account {
     private LocalDate creationDate;
     private double balance;
 
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    private Boolean isDeleted = false;
+
     //---- Many to one de Account a Client
     @ManyToOne
     @JoinColumn(name = "Client_Id")

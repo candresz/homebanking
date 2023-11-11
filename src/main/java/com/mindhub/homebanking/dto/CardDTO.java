@@ -21,7 +21,7 @@ public class CardDTO {
         cardHolder = card.getCardHolder();
         cardType = card.getCardType();
         cardColor = card.getCardColor();
-        number = card.getMaskedCard();
+        number = card.getNumber();
         cvv = card.getCvv();
         thruDate = card.getThruDate();
         fromDate = card.getFromDate();

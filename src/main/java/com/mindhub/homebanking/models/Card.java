@@ -20,6 +20,16 @@ public class Card {
     private LocalDate thruDate;
     private LocalDate fromDate;
 
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    private Boolean isDeleted = false;
+
     public Card() {
     }
 

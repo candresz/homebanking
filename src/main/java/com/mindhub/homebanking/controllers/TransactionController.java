@@ -81,14 +81,14 @@ public class TransactionController {
         }
 
         // Crear la transacción de débito
-        Transaction debitTransaction = new Transaction(TransactionType.DEBIT, -amount, dateTime(), description);
+        Transaction debitTransaction = new Transaction(TransactionType.DEBIT, -amount, sAccount.getBalance()-amount, dateTime(), description);
         sAccount.addTransaction(debitTransaction);
 
         sAccount.setBalance(sAccount.getBalance() - amount);
         transactionService.saveTransaction(debitTransaction);
 
         // Crear la transacción de crédito
-        Transaction creditTransaction = new Transaction(TransactionType.CREDIT, amount, dateTime(), description);
+        Transaction creditTransaction = new Transaction(TransactionType.CREDIT, amount, rAccount.getBalance()+amount, dateTime(), description);
         rAccount.addTransaction(creditTransaction);
 
 

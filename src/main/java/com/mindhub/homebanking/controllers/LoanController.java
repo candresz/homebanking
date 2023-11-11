@@ -91,7 +91,7 @@ public class LoanController {
 
 
         // Crear la transacción de crédito
-        Transaction creditTransaction = new Transaction(TransactionType.CREDIT, loanApplication.getAmount(), dateTime(), loan.getName() + " Loan approved");
+        Transaction creditTransaction = new Transaction(TransactionType.CREDIT, loanApplication.getAmount(),toAccount.getBalance()+loanApplication.getAmount(), dateTime(), loan.getName() + " Loan approved");
         toAccount.addTransaction(creditTransaction);
         transactionService.saveTransaction(creditTransaction);
 

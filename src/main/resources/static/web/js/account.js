@@ -6,6 +6,7 @@ createApp({
       account: [],
       transactions: [],
       id: "",
+      balance: 0,
     };
   },
   methods: {
@@ -26,7 +27,6 @@ createApp({
       .then(({ data }) => {
         this.account = data.find((account) => account.id == this.id);
         this.transactions = this.account.transactions;
-
         this.transactions.sort((a, b) => b.id - a.id);
         setTimeout(() => (this.loading = false), 300);
       })

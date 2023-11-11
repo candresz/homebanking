@@ -12,7 +12,7 @@ public interface AccountService {
     List<AccountDTO> getAllAccountsDTO();
 
     Set<Account> getAllAccountsByClient(Client client);
-
+    Account getAccountById(Long id);
     AccountDTO getAccountDTOById(Long id);
     Set<AccountDTO> getAllAccountsDTOByClient(Client client);
 
@@ -20,4 +20,6 @@ public interface AccountService {
 
     boolean existsAccountByNumber(String string);
     void saveAccount(Account account);
+    boolean existsAccountById(Long id);
+    void deletedAccount(long id);
 }

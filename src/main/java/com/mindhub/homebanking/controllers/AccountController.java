@@ -32,16 +32,16 @@ public class AccountController {
 
 
     @Autowired
-   private AccountService accountService;
+    private AccountService accountService;
 
     @Autowired
     private ClientService clientService;
 
-                                 //  10        100                  // 0 - 1          90       +   10 = 10.25
+    //  10        100                  // 0 - 1          90       +   10 = 10.25
 
 
-    @GetMapping ("/accounts") // Asocio una solicitud get
-    public List<AccountDTO> getAllAccounts(){ // Esto solo es un metodo!
+    @GetMapping("/accounts") // Asocio una solicitud get
+    public List<AccountDTO> getAllAccounts() { // Esto solo es un metodo!
         return accountService.getAllAccountsDTO();
     }
 
@@ -50,6 +50,7 @@ public class AccountController {
         return accountService.getAccountDTOById(id); //
 
     }
+
     @GetMapping("/clients/current/accounts")
     public Set<AccountDTO> getAccountClientCurrent(Authentication authentication) {
         return accountService.getAllAccountsDTOByClient(clientService.findClientByEmail(authentication.getName()));
@@ -76,13 +77,22 @@ public class AccountController {
         } while (accountService.existsAccountByNumber(accountNumberString));
 
         // Creo la cuenta nueva y la agrego al cliente
-        Account account = new Account(accountNumberString, LocalDate.now(), 0 );
+        Account account = new Account(accountNumberString, LocalDate.now(), 0);
         client.addAccount(account);
 
         // guardo el cliente con la nueva cuenta y devuelvo respuesta exitosa
         clientService.saveClient(client);
         accountService.saveAccount(account);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/clients/current/accounts/delete")
+    public ResponseEntity<String> deletedAccount(Long id) {
+        if (!accountService.existsAccountById(id)) {
+            return new ResponseEntity<>("Account does not exists", HttpStatus.FORBIDDEN);
+        }
+        accountService.deletedAccount(id);
+        return new ResponseEntity<>("Account and transactions deleted", HttpStatus.OK);
     }
 
 }

@@ -13,8 +13,25 @@ public class CardServiceImplement implements CardService{
     private CardRepository cardRepository;
 
     @Override
+    public Card getCardById(Long id){
+      return  cardRepository.findById(id).orElse(null);
+
+    }
+    @Override
     public boolean existsCardByNumber(String number) {
         return cardRepository.existsByNumber(number);
+    }
+
+    @Override
+    public boolean existsCardById(Long id) {
+        return cardRepository.existsById(id);
+    }
+
+    @Override
+    public void deletedCard(Long id) {
+        Card card = getCardById(id);
+        card.setDeleted(true);
+        saveCard(card);
     }
 
     @Override

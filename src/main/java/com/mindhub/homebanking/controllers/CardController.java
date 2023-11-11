@@ -70,5 +70,14 @@ public class CardController {
 
         return new ResponseEntity<>("Card created successfully", HttpStatus.CREATED);
     }
+    @PostMapping("/current/cards/delete")
+    public ResponseEntity<String> deletedCard(@RequestParam Long id, Authentication authentication){
+        if(!cardService.existsCardById(id)){
+            return new ResponseEntity<>("Card does not exists", HttpStatus.FORBIDDEN);
+        }
+        cardService.deletedCard(id);
+        return new ResponseEntity<>("Card deleted", HttpStatus.OK);
+    }
+
 }
 
