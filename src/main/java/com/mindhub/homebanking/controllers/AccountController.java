@@ -3,6 +3,7 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.dto.AccountDTO;
 import com.mindhub.homebanking.dto.ClientDTO;
 import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.AccountType;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientLoanRepository;
@@ -59,7 +60,7 @@ public class AccountController {
 
 
     @PostMapping("/clients/current/accounts")
-    public ResponseEntity<String> newAccount(Authentication authentication) {
+    public ResponseEntity<String> newAccount(@RequestParam String accountType,Authentication authentication) {
 
         // encapsulo el cliente
         Client client = clientService.findClientByEmail(authentication.getName());
@@ -68,6 +69,11 @@ public class AccountController {
         if (client.getAccounts().size() >= 3) {
             return new ResponseEntity<>("Cannot create any more accounts for this client", HttpStatus.FORBIDDEN);
         }
+        if (!("SAVINGS".equals(accountType) || "CHECKINGS".equals(accountType))) {
+            return new ResponseEntity<>("You must choose the account type", HttpStatus.FORBIDDEN);
+        }
+
+
 
         // genero un numero de cuenta random
         String accountNumberString;
@@ -77,7 +83,7 @@ public class AccountController {
         } while (accountService.existsAccountByNumber(accountNumberString));
 
         // Creo la cuenta nueva y la agrego al cliente
-        Account account = new Account(accountNumberString, LocalDate.now(), 0);
+        Account account = new Account(accountNumberString, LocalDate.now(), 1000, AccountType.valueOf(accountType));
         client.addAccount(account);
 
         // guardo el cliente con la nueva cuenta y devuelvo respuesta exitosa

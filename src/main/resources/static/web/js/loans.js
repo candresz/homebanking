@@ -13,12 +13,14 @@ createApp({
       paymentsTableArray: [],
       remainingAmount: 0,
       selectedLoan: null,
+      interestRate: 0,
     };
   },
   created() {
     this.getClient();
     this.getLoans();
   },
+
   watch: {
     payments: function (newPayments) {
       // Aquí actualiza paymentsTableArray cuando payments cambie
@@ -27,12 +29,13 @@ createApp({
         { length: paymentsLength },
         (_, index) => index + 1
       );
-      this.remainingAmount = this.totalAmount * 1.2;
+      this.remainingAmount = this.totalAmount * (this.interesRate / 12);
     },
     loanType(newLoanType) {
       // Cada vez que loanType cambie de tipo de loan(id String), el selectedLoan se va actualizar y va a obtener el loan con relacion al id.
       // El comparador no es estricto ya que el LoanType es un string. Y el newLoanType es el valor de loanType
       this.selectedLoan = this.loans.find((loan) => loan.id == newLoanType);
+      this.interestRate = this.selectedLoan.interestRate;
     },
   },
   methods: {
@@ -53,7 +56,7 @@ createApp({
         .get("/api/loans")
         .then((response) => {
           this.loans = response.data;
-
+          this.interestRate = response.data.interestRate;
           setTimeout(() => (this.loading = false), 800);
         })
         .catch((error) => {

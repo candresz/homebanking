@@ -2,6 +2,7 @@ package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dto.ClientDTO;
 import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.AccountType;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
@@ -84,7 +85,7 @@ public class ClientController {
 
         // Crear un nuevo cliente y asociar la cuenta
         Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password), false);
-        Account account = new Account(accountNumberString, LocalDate.now(), 0);
+        Account account = new Account(accountNumberString, LocalDate.now(), 1000, AccountType.SAVINGS);
         client.addAccount(account);
         clientService.saveClient(client);
 

@@ -5,6 +5,7 @@ createApp({
     return {
       client: [],
       accounts: [],
+      accountType: "",
     };
   },
   created() {
@@ -43,9 +44,13 @@ createApp({
       }).then((result) => {
         if (result.isConfirmed) {
           axios
-            .post("/api/clients/current/accounts")
+            .post(
+              "/api/clients/current/accounts",
+              `accountType=${this.accountType}`
+            )
             .then((response) => {
               this.getClient(); // Una vez creada la cuenta, hacemos una solicitud get nuevamente para obtener los datos actualizados.
+              location.pathname = "/web/pages/accounts.html";
             })
             .catch((error) => {
               console.error("Error:", error);

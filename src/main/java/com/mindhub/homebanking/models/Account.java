@@ -19,6 +19,7 @@ public class Account {
     private LocalDate creationDate;
     private double balance;
 
+    private AccountType accountType;
 
     public Boolean getDeleted() {
         return isDeleted;
@@ -44,12 +45,20 @@ public class Account {
     public Account() {
     }
 
-    public Account(String number, LocalDate creationDate, double balance) {
+    public Account(String number, LocalDate creationDate, double balance, AccountType accountType) {
         this.number = number;
         this.creationDate = creationDate;
         this.balance = balance;
+        this.accountType = accountType;
     }
 
+    public AccountType getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
+    }
 
     // Metodos
     public long getId() {

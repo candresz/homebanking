@@ -40,18 +40,20 @@ class WebAuthorization {
                 .antMatchers(
                         "/h2-console/**",
                         "/rest/**",
-                        "/web/pages/manager.html"
+                        "/web/pages/manager.html",
+                        "/web/pages/admin-loan.html"
                 ).hasAuthority("ADMIN")
                 // Rutas de Solo Lectura para Administradores(Obtener listado de clientes)
                 .antMatchers(HttpMethod.GET, "/api/clients", "/api/loans").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/loans/create").hasAuthority("ADMIN")
                 // Rutas Autenticadas (Requieren autenticación)
                 .antMatchers(
                         "/web/pages/**",
                         "/api/clients/current/**"
-                ).hasAuthority("CLIENT")
+                ).authenticated()
                 // Restringir el acceso a /api/loans solo a CLIENT (si es necesario)
-                .antMatchers(HttpMethod.GET, "/api/loans").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.POST, "/api/loans").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.GET, "/api/loans").authenticated()
+                .antMatchers(HttpMethod.POST, "/api/loans").authenticated()
 
                 // Ruta Denegada si no coincide con las rutas previamente definidas (Sin acceso)
                 .anyRequest().denyAll();

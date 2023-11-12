@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,7 +36,6 @@ public class LoanController {
     private ClientLoanService clientLoanService;
     @Autowired
     private TransactionService transactionService;
-
 
 
     @GetMapping("/loans")
@@ -86,12 +86,11 @@ public class LoanController {
         }
 
         // Agrego el 20%
-        double add20 = loanApplication.getAmount() * 1.2;
-
+        double add20 = loanApplication.getAmount() * (loan.getInterestRate() / 12);
 
 
         // Crear la transacción de crédito
-        Transaction creditTransaction = new Transaction(TransactionType.CREDIT, loanApplication.getAmount(),toAccount.getBalance()+loanApplication.getAmount(), dateTime(), loan.getName() + " Loan approved");
+        Transaction creditTransaction = new Transaction(TransactionType.CREDIT, loanApplication.getAmount(), toAccount.getBalance() + loanApplication.getAmount(), dateTime(), loan.getName() + " Loan approved");
         toAccount.addTransaction(creditTransaction);
         transactionService.saveTransaction(creditTransaction);
 
@@ -106,5 +105,29 @@ public class LoanController {
 
         return new ResponseEntity<>("Approved credit", HttpStatus.CREATED);
 
+    }
+
+    @PostMapping("/loans/create")
+    @Transactional
+    public ResponseEntity<String> newAdminLoan(@RequestParam String loanType, @RequestParam int payments, @RequestParam double maxAmount, @RequestParam double interestRate, Authentication authentication) {
+        Client client = clientService.findClientByEmail(authentication.getName());
+
+
+        if(loanType.isBlank()){
+            return new ResponseEntity<>("Please write the loan type", HttpStatus.FORBIDDEN);
+        }
+        if(payments <= 0){
+            return new ResponseEntity<>("Payments must be higher than 0", HttpStatus.FORBIDDEN);
+        }
+        if(maxAmount <= 0){
+            return new ResponseEntity<>("Max Amount must be higher than 0", HttpStatus.FORBIDDEN);
+        }
+        if(interestRate <= 0){
+            return new ResponseEntity<>("Interest Rate must be higher than 0", HttpStatus.FORBIDDEN);
+        }
+
+        Loan newLoan = new Loan(loanType, maxAmount, interestRate, List.of(payments));
+        loanService.saveLoan(newLoan);
+        return new ResponseEntity<>("New Loan Created", HttpStatus.CREATED);
     }
 }
