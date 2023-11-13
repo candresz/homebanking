@@ -8,6 +8,7 @@ createApp({
       creditCards: [],
       debitCards: [],
       localDate: "",
+      cardId: 0,
     };
   },
   created() {
@@ -29,6 +30,40 @@ createApp({
     this.createLocalDate();
   },
   methods: {
+    deleteCard(cardId) {
+      Swal.fire({
+        title: "Are you sure you want to delete the card?",
+        icon: "warning",
+        iconColor: "#fff",
+        showCancelButton: true,
+        background: "#0056b3",
+        confirmButtonColor: "#003f80",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete card",
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .post("/api/clients/current/cards/delete", `id=${cardId}`)
+            .then(() => {
+              Swal.fire({
+                icon: "success",
+                title: "Card deleted",
+                background: "#0056b3",
+                iconColor: "#fff",
+                text: "Card deleted successfully.",
+                confirmButtonColor: "#003f80",
+              }).then(() => {
+                location.pathname = "web/pages/cards.html";
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+              this.errorMessage(error.response.data);
+            });
+        }
+      });
+    },
     createLocalDate() {
       const today = new Date();
       const year = today.getFullYear();

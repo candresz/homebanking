@@ -100,6 +100,14 @@
                   v-for="account of client.accounts"
                   class="account-card p-4 rounded shadow"
                 >
+                  <div class="d-flex justify-content-end">
+                    <button class="bank-button reset-payments" type="click">
+                      <i
+                        @click="deleteAccount(account.id)"
+                        class="bi bi-trash3"
+                      ></i>
+                    </button>
+                  </div>
                   <!-- Información de la cuenta -->
                   <p class="textSecondary">
                     Account Number: #{{ account.number }}

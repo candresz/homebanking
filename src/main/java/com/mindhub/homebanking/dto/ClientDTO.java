@@ -22,7 +22,7 @@ public class ClientDTO {
         firstName = client.getFirstName();
         lastName = client.getLastName();
         email = client.getEmail();
-        accounts = client.getAccounts().stream().map(account -> new AccountDTO(account)).collect(Collectors.toSet());
+        accounts = client.getAccounts().stream().filter(account -> !account.getDeleted()).map(account -> new AccountDTO(account)).collect(Collectors.toSet());
         loans = client.getClientLoans().stream().map(loan-> new ClientLoanDTO(loan)).collect(Collectors.toSet());
         cards = client.getCards().stream()
                 .filter(card -> !card.getDeleted())

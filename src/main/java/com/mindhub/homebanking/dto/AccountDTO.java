@@ -21,7 +21,7 @@ public class AccountDTO {
     number = account.getNumber();
     creationDate = account.getCreationDate();
     balance = account.getBalance();
-    transactions = account.getTransactions().stream().map(transaction->new TransactionDTO(transaction)).collect(Collectors.toSet());
+    transactions = account.getTransactions().stream().filter(transaction -> !transaction.getDeleted()).map(transaction->new TransactionDTO(transaction)).collect(Collectors.toSet());
     accountType = account.getAccountType();
     }
 

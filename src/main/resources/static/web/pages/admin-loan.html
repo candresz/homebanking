@@ -112,16 +112,27 @@
                   name="maxAmount"
                   v-model="maxAmount"
                 />
-                <label for="payments">Payments</label>
-                <input
-                  class="custom-input-field"
-                  type="number"
-                  id="payments"
-                  placeholder="Payments"
-                  min="1"
-                  name="payments"
-                  v-model="payments"
-                />
+                <label for="inputValue">Payments</label>
+                <input type="number" name="inputValue" v-model="inputValue" />
+                <div class="d-flex gap1">
+                  <button
+                    class="bank-button add-payment"
+                    @click="addValueToArray"
+                  >
+                    Add Payment
+                  </button>
+                  <button
+                    class="bank-button reset-payments"
+                    @click="resetPayments"
+                  >
+                    Reset Payments
+                  </button>
+                </div>
+
+                <label v-for="(payment, index) in payments" :key="index">
+                  {{ payment }}
+                </label>
+
                 <label for="payments">Interest Rate</label>
                 <input
                   class="custom-input-field"

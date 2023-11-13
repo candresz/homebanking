@@ -729,3 +729,42 @@ input[type="radio"] {
   justify-content: center;
   align-items: center;
 }
+/* Estilo base para los botones */
+.bank-button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 0.5rem;
+}
+
+/* Estilo para el botón de Agregar */
+.add-payment {
+  background-color: #0056b3; /* Color principal */
+}
+
+.add-payment:hover {
+  background-color: #003f80; /* Color al pasar el ratón */
+}
+
+/* Estilo para el botón de Resetear */
+.reset-payments {
+  background-color: #d33; /* Color de alerta */
+}
+
+.reset-payments:hover {
+  background-color: #b22; /* Color al pasar el ratón */
+}
+
+/* Ajustes para la disposición de los botones */
+.d-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gap1 {
+  gap: 1rem;
+}

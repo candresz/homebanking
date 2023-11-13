@@ -53,7 +53,7 @@ public class CardController {
         int numberOfCardType =
                 (int) client.getCards().stream().filter(card -> card.getCardType().equals(CardType.valueOf(cardType))).count();
 
-        if (numberOfCardType == 3) {
+        if (cardService.countByClientAndIsDeleted(client) == 3) {
             return new ResponseEntity<>("You cannot have more than three cards of the same type.", HttpStatus.FORBIDDEN);
         }
 

@@ -22,4 +22,6 @@ public interface AccountService {
     void saveAccount(Account account);
     boolean existsAccountById(Long id);
     void deletedAccount(long id);
+
+    int countByClientAndIsDeleted (Client client);
 }

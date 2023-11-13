@@ -95,12 +95,14 @@ createApp({
               console.log("Loan " + response);
               Swal.fire({
                 icon: "success",
-                title: "Loan requested",
-                text: "Your loan request has been sent successfully.",
+                title: "Card deleted",
+                background: "#0056b3",
+                iconColor: "#fff",
+                text: "Card deleted successfully.",
                 confirmButtonColor: "#003f80",
-                background: "#1c2754",
+              }).then(() => {
+                location.pathname = "web/pages/accounts.html";
               });
-              location.pathname = "/web/pages/accounts.html";
             })
             .catch((error) => {
               console.log(error);

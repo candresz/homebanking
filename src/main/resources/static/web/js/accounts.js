@@ -12,6 +12,40 @@ createApp({
     this.getClient(); // Es util tener el metodo a la mano, para poder actualizar datos.
   },
   methods: {
+    deleteAccount(accountId) {
+      Swal.fire({
+        title: "Are you sure you want to delete the account?",
+        icon: "warning",
+        iconColor: "#fff",
+        showCancelButton: true,
+        background: "#0056b3",
+        confirmButtonColor: "#003f80",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete account",
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .post("/api/clients/current/accounts/delete", `id=${accountId}`)
+            .then(() => {
+              Swal.fire({
+                icon: "success",
+                title: "Account deleted",
+                background: "#0056b3",
+                iconColor: "#fff",
+                text: "Account deleted successfully.",
+                confirmButtonColor: "#003f80",
+              }).then(() => {
+                location.pathname = "web/pages/accounts.html";
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+              this.errorMessage(error.response.data);
+            });
+        }
+      });
+    },
     getClient() {
       axios
         .get("/api/clients/current")

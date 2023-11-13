@@ -36,14 +36,14 @@ createApp({
     },
     createTransfer() {
       Swal.fire({
-        title: "Are you sure you want to request the loan?",
+        title: "Are you sure you want to make the transfer?",
         icon: "warning",
         iconColor: "#fff",
         showCancelButton: true,
         background: "#0056b3",
         confirmButtonColor: "#003f80",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, request loan",
+        confirmButtonText: "Yes, make transfer",
         cancelButtonText: "Cancel",
       }).then((result) => {
         if (result.isConfirmed) {
@@ -51,9 +51,18 @@ createApp({
             .post(
               `/api/clients/current/transaction?amount=${this.amount}&description=${this.description}&fromAccount=${this.fromAccount}&toAccount=${this.toAccount}`
             )
-            .then((response) => {
-              this.getClient(); // Una vez creada la transferencia, hacemos una solicitud get nuevamente para obtener los datos actualizados.
-              location.pathname = "/web/pages/accounts.html";
+            .then(() => {
+              Swal.fire({
+                icon: "success",
+                title: "Transfer successfully",
+                background: "#0056b3",
+                iconColor: "#fff",
+                text: "Transfer successfully.",
+                confirmButtonColor: "#003f80",
+              }).then(() => {
+                get.client();
+                location.pathname = "web/pages/accounts.html";
+              });
             })
             .catch((error) => {
               console.log(error);

@@ -3,7 +3,8 @@ const { createApp } = Vue;
 createApp({
   data() {
     return {
-      payments: 0,
+      inputValue: 0,
+      payments: [],
       maxAmount: 0,
       loanType: "",
       interestRate: 0,
@@ -37,16 +38,17 @@ createApp({
               "/api/loans/create",
               `loanType=${this.loanType}&payments=${this.payments}&maxAmount=${this.maxAmount}&interestRate=${this.interestRate}`
             )
-            .then((response) => {
-              console.log("Loan " + response);
+            .then(() => {
               Swal.fire({
                 icon: "success",
-                title: "Loan requested",
-                text: "Your loan request has been sent successfully.",
+                title: "Loan created",
+                background: "#0056b3",
+                iconColor: "#fff",
+                text: "Loan created successfully.",
                 confirmButtonColor: "#003f80",
-                background: "#1c2754",
+              }).then(() => {
+                location.pathname = "web/pages/admin-loan.html";
               });
-              location.pathname = "web/pages/admin-loan.html";
             })
             .catch((error) => {
               console.log(error);
@@ -65,6 +67,15 @@ createApp({
         background: "#0056b3",
         confirmButtonColor: "#17acc9",
       });
+    },
+    addValueToArray() {
+      if (this.inputValue !== 0) {
+        this.payments.push(this.inputValue);
+        this.inputValue = 0;
+      }
+    },
+    resetPayments() {
+      this.payments = 0;
     },
   },
 }).mount("#app");

@@ -1,11 +1,14 @@
 package com.mindhub.homebanking.services.implement;
 
 import com.mindhub.homebanking.models.Card;
+import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.services.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 @Service
 public class CardServiceImplement implements CardService{
@@ -37,5 +40,15 @@ public class CardServiceImplement implements CardService{
     @Override
     public void saveCard(Card card) {
         cardRepository.save(card);
+    }
+
+    @Override
+    public int countByClientAndIsDeleted(Client client) {
+        return cardRepository.countByClientAndIsDeleted(client, false);
+    }
+
+    @Override
+    public Set<Card> findByClientAndIsDeletedFalse(Client client) {
+        return cardRepository.findByClientAndIsDeletedFalse(client);
     }
 }

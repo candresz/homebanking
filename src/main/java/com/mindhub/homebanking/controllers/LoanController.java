@@ -109,14 +109,14 @@ public class LoanController {
 
     @PostMapping("/loans/create")
     @Transactional
-    public ResponseEntity<String> newAdminLoan(@RequestParam String loanType, @RequestParam int payments, @RequestParam double maxAmount, @RequestParam double interestRate, Authentication authentication) {
+    public ResponseEntity<String> newAdminLoan(@RequestParam String loanType, @RequestParam List<Integer> payments, @RequestParam double maxAmount, @RequestParam double interestRate, Authentication authentication) {
         Client client = clientService.findClientByEmail(authentication.getName());
 
 
         if(loanType.isBlank()){
             return new ResponseEntity<>("Please write the loan type", HttpStatus.FORBIDDEN);
         }
-        if(payments <= 0){
+        if(payments.isEmpty()){
             return new ResponseEntity<>("Payments must be higher than 0", HttpStatus.FORBIDDEN);
         }
         if(maxAmount <= 0){
@@ -126,7 +126,7 @@ public class LoanController {
             return new ResponseEntity<>("Interest Rate must be higher than 0", HttpStatus.FORBIDDEN);
         }
 
-        Loan newLoan = new Loan(loanType, maxAmount, interestRate, List.of(payments));
+        Loan newLoan = new Loan(loanType, maxAmount, interestRate, payments);
         loanService.saveLoan(newLoan);
         return new ResponseEntity<>("New Loan Created", HttpStatus.CREATED);
     }

@@ -35,7 +35,7 @@ public class AccountServiceImplement implements AccountService {
 
     @Override
     public Set<Account> getAllAccountsByClient(Client client) {
-        return accountRepository.findByClient(client);
+        return accountRepository.findByClientAndIsDeletedFalse(client);
     }
 
     @Override
@@ -88,5 +88,10 @@ public class AccountServiceImplement implements AccountService {
                     transactionRepository.save(transaction);
                 });
         saveAccount(account);
+    }
+
+    @Override
+    public int countByClientAndIsDeleted(Client client) {
+        return accountRepository.countByClientAndIsDeleted(client, false);
     }
 }

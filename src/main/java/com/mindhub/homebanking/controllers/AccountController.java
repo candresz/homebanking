@@ -55,7 +55,6 @@ public class AccountController {
     @GetMapping("/clients/current/accounts")
     public Set<AccountDTO> getAccountClientCurrent(Authentication authentication) {
         return accountService.getAllAccountsDTOByClient(clientService.findClientByEmail(authentication.getName()));
-
     }
 
 
@@ -66,7 +65,7 @@ public class AccountController {
         Client client = clientService.findClientByEmail(authentication.getName());
 
         // controlo que no haya mas de 3 cuentas
-        if (client.getAccounts().size() >= 3) {
+        if (accountService.countByClientAndIsDeleted(client) >= 3) {
             return new ResponseEntity<>("Cannot create any more accounts for this client", HttpStatus.FORBIDDEN);
         }
         if (!("SAVINGS".equals(accountType) || "CHECKINGS".equals(accountType))) {
@@ -93,7 +92,7 @@ public class AccountController {
     }
 
     @PostMapping("/clients/current/accounts/delete")
-    public ResponseEntity<String> deletedAccount(Long id) {
+    public ResponseEntity<String> deletedAccount(@RequestParam Long id) {
         if (!accountService.existsAccountById(id)) {
             return new ResponseEntity<>("Account does not exists", HttpStatus.FORBIDDEN);
         }

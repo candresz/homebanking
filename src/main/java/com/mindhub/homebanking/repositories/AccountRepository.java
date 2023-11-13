@@ -12,4 +12,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     boolean existsByNumber(String number);
     Account findByNumber(String number);
     Set<Account> findByClient(Client client);
+    Set<Account> findByClientAndIsDeletedFalse(Client client);
+    int countByClientAndIsDeleted (Client client, boolean isDeleted);
 }

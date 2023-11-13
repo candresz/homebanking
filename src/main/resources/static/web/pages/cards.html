@@ -12,6 +12,14 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css"
+      rel="stylesheet"
+    />
     <link rel="shortcut icon" href="./img/logol.png" type="image/x-icon" />
     <link rel="stylesheet" href="../styles/styles.css" />
   </head>
@@ -82,6 +90,11 @@
                 class="d-flex flex-column flex-md-row justify-content-center align-items-center gapContainer"
               >
                 <div v-for="card of creditCards">
+                  <div class="d-flex justify-content-end">
+                    <button class="bank-button reset-payments" type="click">
+                      <i @click="deleteCard(card.id)" class="bi bi-trash3"> </i>
+                    </button>
+                  </div>
                   <div
                     :class="{
                     'credit-card-gold': card.cardColor == 'GOLD',
@@ -117,7 +130,9 @@
                       </p>
                       <span v-else>{{ card.cardHolder }}</span>
                     </div>
-                    <div class="card-number d-flex align-items-end">
+                    <div
+                      class="card-number d-flex align-items-end justify-content-start"
+                    >
                       <span :class="{'expiredC': localDate > card.thruDate}"
                         >CVV {{card.cvv}}</span
                       >
@@ -141,9 +156,14 @@
 
               <h2>Debit Cards</h2>
               <div
-                class="d-flex flex-row justify-content-center align-items-center gapContainer"
+                class="d-flex flex-column flex-md-row justify-content-center align-items-center gapContainer"
               >
                 <div v-for="card of debitCards">
+                  <div class="d-flex justify-content-end">
+                    <button class="bank-button reset-payments" type="click">
+                      <i @click="deleteCard(card.id)" class="bi bi-trash3"> </i>
+                    </button>
+                  </div>
                   <div
                     :class="{
                     'credit-card-gold': card.cardColor == 'GOLD',
@@ -180,7 +200,9 @@
                       <span v-else>{{ card.cardHolder }}</span>
                     </div>
 
-                    <div class="card-number d-flex align-items-end">
+                    <div
+                      class="card-number d-flex align-items-end justify-content-start"
+                    >
                       <span :class="{'expiredC': localDate > card.thruDate}"
                         >CVV {{card.cvv}}</span
                       >
@@ -228,6 +250,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
     <script src="../js/cards.js"></script>
   </body>
 </html>
