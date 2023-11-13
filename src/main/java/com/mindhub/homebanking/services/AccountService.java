@@ -13,10 +13,12 @@ public interface AccountService {
 
     Set<Account> getAllAccountsByClient(Client client);
     Account getAccountById(Long id);
+    double getBalanceByAccountId(Long id);
     AccountDTO getAccountDTOById(Long id);
     Set<AccountDTO> getAllAccountsDTOByClient(Client client);
 
     Account findAccountByNumber(String number);
+    Account findAccountById(Long id);
 
     boolean existsAccountByNumber(String string);
     void saveAccount(Account account);
@@ -24,4 +26,5 @@ public interface AccountService {
     void deletedAccount(long id);
 
     int countByClientAndIsDeleted (Client client);
+    boolean existsByIdAndBalanceGreaterThanEqual(Long id, Double balance);
 }

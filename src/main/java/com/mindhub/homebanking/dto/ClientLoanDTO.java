@@ -14,7 +14,7 @@ public class ClientLoanDTO {
 
 
     public ClientLoanDTO(ClientLoan clientLoan) {
-        ID = clientLoan.getID();
+        ID = clientLoan.getId();
         loanId = clientLoan.getLoan().getID();
         loanName = clientLoan.getLoan().getName();
         amount = clientLoan.getAmount();

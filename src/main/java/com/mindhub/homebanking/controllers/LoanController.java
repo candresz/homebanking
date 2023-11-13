@@ -113,16 +113,16 @@ public class LoanController {
         Client client = clientService.findClientByEmail(authentication.getName());
 
 
-        if(loanType.isBlank()){
+        if (loanType.isBlank()) {
             return new ResponseEntity<>("Please write the loan type", HttpStatus.FORBIDDEN);
         }
-        if(payments.isEmpty()){
+        if (payments.isEmpty()) {
             return new ResponseEntity<>("Payments must be higher than 0", HttpStatus.FORBIDDEN);
         }
-        if(maxAmount <= 0){
+        if (maxAmount <= 0) {
             return new ResponseEntity<>("Max Amount must be higher than 0", HttpStatus.FORBIDDEN);
         }
-        if(interestRate <= 0){
+        if (interestRate <= 0) {
             return new ResponseEntity<>("Interest Rate must be higher than 0", HttpStatus.FORBIDDEN);
         }
 
@@ -130,4 +130,48 @@ public class LoanController {
         loanService.saveLoan(newLoan);
         return new ResponseEntity<>("New Loan Created", HttpStatus.CREATED);
     }
+
+    @PostMapping("/loans/payments")
+    @Transactional
+    public ResponseEntity<String> payLoan(@RequestParam long clientLoanId, long accountId, double amount, int payments, String description, Authentication authentication) {
+        ClientLoan clientLoan = clientLoanService.getClientLoanById(clientLoanId);
+        Account account = accountService.getAccountById(accountId);
+
+
+        if (!clientLoanService.existsById(clientLoanId)) {
+            return new ResponseEntity<>("Loan does not exists", HttpStatus.FORBIDDEN);
+        }
+        if (!accountService.existsAccountById(accountId)) {
+            return new ResponseEntity<>("Account does not exists", HttpStatus.FORBIDDEN);
+        }
+        if (accountService.getBalanceByAccountId(accountId) < amount) {
+            return new ResponseEntity<>("Insufficient balance", HttpStatus.FORBIDDEN);
+        }
+        if (clientLoan.getPayments() < payments) {
+            return new ResponseEntity<>("Monthly payment not valid", HttpStatus.FORBIDDEN);
+        }
+
+        // Disminuir saldo de la cuenta
+        double newAccountBalance = account.getBalance() - amount;
+        account.setBalance(newAccountBalance);
+
+        // Disminuir saldo pendiente del préstamo
+        double newLoanBalance = clientLoan.getAmount() - amount;
+        clientLoan.setAmount(newLoanBalance);
+
+        int newPayments = clientLoan.getPayments() - payments;
+        clientLoan.setPayments(newPayments);
+
+        Transaction transaction = new Transaction(TransactionType.valueOf("DEBIT"), amount, account.getBalance()-amount, dateTime(), description);
+
+        // Guardar los cambios
+        accountService.saveAccount(account);
+        clientLoanService.saveClientLoan(clientLoan);
+        account.addTransaction(transaction);
+        transactionService.saveTransaction(transaction);
+
+
+        return new ResponseEntity<>("Paid successfully", HttpStatus.OK);
+    }
+
 }

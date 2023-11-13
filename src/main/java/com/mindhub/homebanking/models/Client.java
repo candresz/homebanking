@@ -14,7 +14,7 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    private Long ID;
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
@@ -51,8 +51,8 @@ public class Client {
     // Getters y setters
 
 
-    public Long getID() {
-        return ID;
+    public Long getId() {
+        return id;
     }
 
 
@@ -142,7 +142,7 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
-                "ID=" + ID +
+                "ID=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +

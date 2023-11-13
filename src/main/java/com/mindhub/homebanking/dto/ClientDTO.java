@@ -18,7 +18,7 @@ public class ClientDTO {
 
 
     public ClientDTO(Client client) {
-        ID = client.getID();
+        ID = client.getId();
         firstName = client.getFirstName();
         lastName = client.getLastName();
         email = client.getEmail();

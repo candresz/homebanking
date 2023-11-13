@@ -43,6 +43,11 @@ public class AccountServiceImplement implements AccountService {
         return accountRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public double getBalanceByAccountId(Long id) {
+        return getAccountById(id).getBalance();
+    }
+
 
     @Override
     public AccountDTO getAccountDTOById(Long id) {
@@ -58,6 +63,11 @@ public class AccountServiceImplement implements AccountService {
     @Override
     public Account findAccountByNumber(String number) {
         return accountRepository.findByNumber(number);
+    }
+
+    @Override
+    public Account findAccountById(Long id) {
+        return accountRepository.findById(id).orElse(null);
     }
 
 
@@ -93,5 +103,10 @@ public class AccountServiceImplement implements AccountService {
     @Override
     public int countByClientAndIsDeleted(Client client) {
         return accountRepository.countByClientAndIsDeleted(client, false);
+    }
+
+    @Override
+    public boolean existsByIdAndBalanceGreaterThanEqual(Long id, Double balance) {
+        return accountRepository.existsByIdAndBalanceGreaterThanEqual(id, balance);
     }
 }

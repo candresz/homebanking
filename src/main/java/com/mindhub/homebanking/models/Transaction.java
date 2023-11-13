@@ -37,6 +37,10 @@ public class Transaction {
 
 
     // Constructores
+    public Transaction(TransactionType debit, double amount, LocalDateTime localDateTime, String description) {
+
+    }
+
     public Transaction() {
 
     }

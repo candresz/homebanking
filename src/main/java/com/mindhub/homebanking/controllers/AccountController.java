@@ -96,6 +96,10 @@ public class AccountController {
         if (!accountService.existsAccountById(id)) {
             return new ResponseEntity<>("Account does not exists", HttpStatus.FORBIDDEN);
         }
+
+    if(accountService.existsByIdAndBalanceGreaterThanEqual(id,1.0)){
+        return new ResponseEntity<>("Balance is less than 1", HttpStatus.FORBIDDEN);
+    }
         accountService.deletedAccount(id);
         return new ResponseEntity<>("Account and transactions deleted", HttpStatus.OK);
     }

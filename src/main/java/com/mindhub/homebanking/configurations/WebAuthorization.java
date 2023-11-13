@@ -53,7 +53,7 @@ class WebAuthorization {
                 ).authenticated()
                 // Restringir el acceso a /api/loans solo a CLIENT (si es necesario)
                 .antMatchers(HttpMethod.GET, "/api/loans").authenticated()
-                .antMatchers(HttpMethod.POST, "/api/loans").authenticated()
+                .antMatchers(HttpMethod.POST, "/api/loans", "/api/loans/payments").authenticated()
 
                 // Ruta Denegada si no coincide con las rutas previamente definidas (Sin acceso)
                 .anyRequest().denyAll();
