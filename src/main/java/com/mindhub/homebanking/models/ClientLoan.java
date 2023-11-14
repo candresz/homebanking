@@ -15,6 +15,8 @@ public class ClientLoan {
 
     private int payments;
 
+    private Boolean isPaid;
+
     // --- Relacion con el cliente
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
@@ -28,9 +30,18 @@ public class ClientLoan {
     public ClientLoan() {
     }
 
-    public ClientLoan(double amount, int payments) {
+    public ClientLoan(double amount, int payments, boolean isPaid) {
         this.amount = amount;
         this.payments = payments;
+        this.isPaid = isPaid;
+    }
+
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        isPaid = paid;
     }
 
     public Long getId() {

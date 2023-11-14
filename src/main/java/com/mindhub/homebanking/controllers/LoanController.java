@@ -94,7 +94,7 @@ public class LoanController {
         toAccount.addTransaction(creditTransaction);
         transactionService.saveTransaction(creditTransaction);
 
-        ClientLoan newLoan = new ClientLoan(add20, loanApplication.getPayments());
+        ClientLoan newLoan = new ClientLoan(add20, loanApplication.getPayments(), false);
         client.addClientLoan(newLoan);
         loan.addClientLoan(newLoan);
 
@@ -150,6 +150,9 @@ public class LoanController {
         if (clientLoan.getPayments() < payments) {
             return new ResponseEntity<>("Monthly payment not valid", HttpStatus.FORBIDDEN);
         }
+        if(amount == clientLoan.getAmount()){
+            clientLoanService.paidLoan(clientLoanId);
+        }
 
         // Disminuir saldo de la cuenta
         double newAccountBalance = account.getBalance() - amount;
@@ -162,7 +165,9 @@ public class LoanController {
         int newPayments = clientLoan.getPayments() - payments;
         clientLoan.setPayments(newPayments);
 
+
         Transaction transaction = new Transaction(TransactionType.valueOf("DEBIT"), amount, account.getBalance()-amount, dateTime(), description);
+
 
         // Guardar los cambios
         accountService.saveAccount(account);

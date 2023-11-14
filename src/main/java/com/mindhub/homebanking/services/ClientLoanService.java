@@ -16,5 +16,6 @@ public interface ClientLoanService {
     ClientLoan getClientLoan(Client client, Loan loan);
     boolean existsById(Long id);
     ClientLoan getClientLoanById(Long id);
+    void paidLoan(long id);
 
 }

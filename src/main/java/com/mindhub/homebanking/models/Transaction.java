@@ -12,7 +12,7 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    private Long ID;
+    private Long id;
 
     private TransactionType type;
     private double amount;
@@ -65,7 +65,7 @@ public class Transaction {
     }
 
     public Long getID() {
-        return ID;
+        return id;
     }
 
 
