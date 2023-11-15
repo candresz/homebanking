@@ -28,19 +28,5 @@ This project is a simulated banking application developed with the goal of learn
 ![Payments](https://github.com/candresz/homebanking/assets/136767000/a73b900b-b97d-44c0-bb41-41a7e8dc13df)
 ![errors](https://github.com/candresz/homebanking/assets/136767000/ab9c8653-b0ef-442d-a15b-572b253a15ac)
 
-
-
-
-
-
-## Installation
-Detailed instructions on how to install and configure the project locally.
-![Uploading image.png…]()
-
-```bash
-git clone [repository URL]
-cd [repository name]
-# more commands as needed
-
 Authors
 Carlos Zarate - Lead Developer
